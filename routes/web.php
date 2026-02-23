@@ -1,0 +1,61 @@
+<?php
+
+use App\Http\Controllers\Auth\LoginController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Route;
+
+/*
+|--------------------------------------------------------------------------
+| Authentication Routes (Guest Only)
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [LoginController::class, 'show'])->name('login');
+    Route::post('/login', [LoginController::class, 'store'])->name('login.store');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Authenticated Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware('auth')->group(function () {
+    Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
+
+    Route::view('/dashboard', 'dashboard')->name('dashboard');
+    Route::view('/profile', 'profile.edit')->name('profile.edit');
+    Route::patch('/profile', function (Request $request) {
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255', 'unique:users,email,' . $request->user()->id],
+            'password' => ['nullable', 'string', 'min:8', 'confirmed'],
+        ]);
+
+        $user = $request->user();
+        $user->name = $validated['name'];
+        $user->email = $validated['email'];
+
+        if (!empty($validated['password'])) {
+            $user->password = Hash::make($validated['password']);
+        }
+
+        $user->save();
+
+        return redirect()->route('profile.edit')->with('status', 'Profile updated.');
+    })->name('profile.update');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Root Redirect
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/', function () {
+    return auth()->check()
+        ? redirect()->route('dashboard')
+        : redirect()->route('login');
+});

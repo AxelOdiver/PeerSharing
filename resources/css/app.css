@@ -1,0 +1,21 @@
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+@import 'admin-lte/dist/css/adminlte.css';
+
+.dashboard-avatar {
+    width: 2.25rem;
+    height: 2.25rem;
+}
+
+.sidebar-user {
+    margin: 0.5rem 0.5rem 0;
+}
+
+.sidebar-user-meta {
+    min-width: 0;
+}
+
+.sidebar-user-meta small {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
