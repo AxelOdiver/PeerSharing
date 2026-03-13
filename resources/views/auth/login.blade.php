@@ -55,20 +55,7 @@
 
         <div class="social-auth-links text-center mt-3 mb-3">
           <p>- OR -</p>
-          <a href="#" class="btn btn-secondary w-100">Register</a>
-          
-
-        @if (Route::has('password.request'))
-          <p class="mb-1">
-            <a href="{{ route('password.request') }}">I forgot my password</a>
-          </p>
-        @endif
-
-        @if (Route::has('register'))
-          <p class="mb-0">
-            <a href="{{ route('register') }}" class="text-center"> a new membership</a>
-          </p>
-        @endif
+          <a href="{{ route('register') }}" class="btn btn-secondary w-100">Register</a>
       </div>
     </div>
 
