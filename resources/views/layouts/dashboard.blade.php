@@ -87,34 +87,6 @@
 
         setTheme(getPreferredTheme());
 
-        const showActiveTheme = (theme, focus = false) => {
-          const themeSwitcher = document.querySelector('#bd-theme');
-
-          if (!themeSwitcher) {
-            return;
-          }
-
-          const themeSwitcherText = document.querySelector('#bd-theme-text');
-          const activeThemeIcon = document.querySelector('.theme-icon-active i');
-          const btnToActive = document.querySelector(`[data-bs-theme-value="${theme}"]`);
-          const iconOfActiveBtn = btnToActive.querySelector('i').getAttribute('class');
-
-          document.querySelectorAll('[data-bs-theme-value]').forEach((element) => {
-            element.setAttribute('aria-pressed', 'false');
-            element.querySelector('.bi-check-lg').classList.add('d-none');
-          });
-
-          btnToActive.setAttribute('aria-pressed', 'true');
-          btnToActive.querySelector('.bi-check-lg').classList.remove('d-none');
-          activeThemeIcon.setAttribute('class', iconOfActiveBtn);
-          const themeSwitcherLabel = `${themeSwitcherText.textContent} (${btnToActive.dataset.bsThemeValue})`;
-          themeSwitcher.setAttribute('aria-label', themeSwitcherLabel);
-
-          if (focus) {
-            themeSwitcher.focus();
-          }
-        };
-
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
           const storedTheme = localStorage.getItem('theme');
           if (storedTheme !== 'light' && storedTheme !== 'dark') {
@@ -123,15 +95,49 @@
         });
 
         window.addEventListener('DOMContentLoaded', () => {
+          const $ = window.jQuery;
+
+          if (!$) {
+            return;
+          }
+
+          const showActiveTheme = (theme, focus = false) => {
+            const themeSwitcher = $('#bd-theme');
+
+            if (!themeSwitcher.length) {
+              return;
+            }
+
+            const themeSwitcherText = $('#bd-theme-text');
+            const activeThemeIcon = $('.theme-icon-active i');
+            const btnToActive = $(`[data-bs-theme-value="${theme}"]`);
+            const iconOfActiveBtn = btnToActive.find('i').attr('class');
+
+            $('[data-bs-theme-value]').each((_, element) => {
+              const $element = $(element);
+
+              $element.attr('aria-pressed', 'false');
+              $element.find('.bi-check-lg').addClass('d-none');
+            });
+
+            btnToActive.attr('aria-pressed', 'true');
+            btnToActive.find('.bi-check-lg').removeClass('d-none');
+            activeThemeIcon.attr('class', iconOfActiveBtn);
+            const themeSwitcherLabel = `${themeSwitcherText.text()} (${btnToActive.data('bs-theme-value')})`;
+            themeSwitcher.attr('aria-label', themeSwitcherLabel);
+
+            if (focus) {
+              themeSwitcher.trigger('focus');
+            }
+          };
+
           showActiveTheme(getPreferredTheme());
 
-          document.querySelectorAll('[data-bs-theme-value]').forEach((toggle) => {
-            toggle.addEventListener('click', () => {
-              const theme = toggle.getAttribute('data-bs-theme-value');
-              localStorage.setItem('theme', theme);
-              setTheme(theme);
-              showActiveTheme(theme, true);
-            });
+          $('[data-bs-theme-value]').on('click', function () {
+            const theme = $(this).data('bs-theme-value');
+            localStorage.setItem('theme', theme);
+            setTheme(theme);
+            showActiveTheme(theme, true);
           });
         });
       })();

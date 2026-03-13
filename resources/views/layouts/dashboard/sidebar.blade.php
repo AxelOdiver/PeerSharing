@@ -18,6 +18,7 @@
         </div>
       </div>
     </div>
+    
 
     <nav class="mt-3">
       <ul
@@ -27,32 +28,32 @@
         aria-label="Main navigation"
         data-accordion="false"
       >
-        <li class="nav-item mb-2">
+        <li class="nav-item">
           <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
             <i class="nav-icon bi bi-speedometer"></i>
             <p>Dashboard</p>
           </a>
         </li>
-        <li class="nav-item mb-2">
-          <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+        <li class="nav-item">
+          <a href="{{ route('favorites') }}" class="nav-link {{ request()->routeIs('favorites') ? 'active' : '' }}">
             <i class="nav-icon bi bi-star"></i>
             <p>Favorites</p>
           </a>
         </li>
-         <li class="nav-item mb-2">
-          <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+         <li class="nav-item">
+          <a href="{{ route('schedule') }}" class="nav-link {{ request()->routeIs('schedule') ? 'active' : '' }}">
             <i class="nav-icon bi bi-alarm"></i>
-            <p>Schedule Classes</p>
+            <p>Schedule</p>
           </a>
         </li>
-        <li class="nav-item mb-2">
-          <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+        <li class="nav-item">
+          <a href="{{ route('messages') }}" class="nav-link {{ request()->routeIs('messages') ? 'active' : '' }}">
             <i class="nav-icon bi bi-chat-dots"></i>
             <p>Messages</p>
           </a>
         </li>
-        <li class="nav-item mb-2">
-          <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+        <li class="nav-item">
+          <a href="{{ route('history') }}" class="nav-link {{ request()->routeIs('history') ? 'active' : '' }}">
             <i class="nav-icon bi bi-clock-history"></i>
             <p>History</p>
           </a>
