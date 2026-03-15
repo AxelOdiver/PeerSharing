@@ -7,7 +7,7 @@
   <div class="login-box">
 
     <div class="login-logo">
-      <a href="{{ url('/') }}"><b>Peer</b>Sharing</a>
+      <a href="{{ url('/') }}"><b>Peer</b>Hive</a>
     </div>
 
     <div class="card">

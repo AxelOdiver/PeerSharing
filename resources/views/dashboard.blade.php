@@ -6,7 +6,8 @@
 @section('content')
   <div class="row">
     <div class="col-12 col-md-6">
-      <div class="card">
+      <h2 class="mb-3 fw-bold">Free Learning</h2>
+      <div class="card border-0 shadow-sm rounded-4 overflow-hidden h-100">
         <div class="card-header p-1" style="max-height: 150px; overflow: hidden;"> 
           <img src="https://images.pexels.com/photos/1054218/pexels-photo-1054218.jpeg?_gl=1*k7b7ow*_ga*ODI0MzA5MzAwLjE3NzM0MTU5NzY.*_ga_8JE65Q40S6*czE3NzM0MTU5NzYkbzEkZzEkdDE3NzM0MTU5NzgkajU4JGwwJGgw" class="card-img-top" />
         </div>
@@ -19,6 +20,7 @@
       </div>
     </div>
     <div class="col-12 col-md-6">
+      <h2 class="mb-3 fw-bold">Swap, Learn, Grow</h2>
       <div class="card">
         <div class="card-header p-1" style="max-height: 150px; overflow: hidden;"> 
           <img src="https://images.pexels.com/photos/1054218/pexels-photo-1054218.jpeg?_gl=1*k7b7ow*_ga*ODI0MzA5MzAwLjE3NzM0MTU5NzY.*_ga_8JE65Q40S6*czE3NzM0MTU5NzYkbzEkZzEkdDE3NzM0MTU5NzgkajU4JGwwJGgw" class="card-img-top" />
@@ -33,3 +35,5 @@
     </div>
   </div>
 @endsection
+
+

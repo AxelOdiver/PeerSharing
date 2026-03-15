@@ -31,6 +31,7 @@ Route::middleware('auth')->group(function () {
     Route::view('/dashboard', 'dashboard')->name('dashboard');
 
     Route::view('/favorites', 'favorites')->name('favorites');
+    Route::view('/swap', 'swap')->name('swap');
     Route::view('/schedule', 'schedule')->name('schedule');
     Route::view('/messages', 'messages')->name('messages');
     Route::view('/history', 'history')->name('history');

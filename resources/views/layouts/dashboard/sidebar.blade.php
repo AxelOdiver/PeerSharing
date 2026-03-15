@@ -5,7 +5,7 @@
     </a>
   </div>
 
-  <div class="sidebar-wrapper">
+  <div class="sidebar-wrapper d-flex flex-column" style="min-height: calc(100vh - 60px);">
     <div class="sidebar-user border-bottom border-secondary-subtle">
       <div class="d-flex justify-content-center align-items-center gap-2 p-3">
         <div class="rounded-circle bg-primary d-flex align-items-center justify-content-center dashboard-avatar">
@@ -20,7 +20,7 @@
     </div>
     
 
-    <nav class="mt-3">
+    <nav class="mt-3 flex-grow-1">
       <ul
         class="nav sidebar-menu flex-column"
         data-lte-toggle="treeview"
@@ -38,6 +38,12 @@
           <a href="{{ route('favorites') }}" class="nav-link {{ request()->routeIs('favorites') ? 'active' : '' }}">
             <i class="nav-icon bi bi-star"></i>
             <p>Favorites</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ route('swap') }}" class="nav-link {{ request()->routeIs('swap') ? 'active' : '' }}">
+            <i class="nav-icon bi bi-arrow-left-right"></i>
+            <p>Swap</p>
           </a>
         </li>
          <li class="nav-item">
@@ -60,5 +66,15 @@
         </li>
       </ul>
     </nav>
+
+    <div class="mt-auto border-top border-secondary-subtle p-2">
+      <form method="POST" action="{{ route('logout') }}">
+        @csrf
+        <button type="submit" class="nav-link border-0 bg-transparent text-white w-100 d-flex align-items-center px-3 py-2">
+          <i class="bi bi-box-arrow-right me-2"></i>
+          <span>Log out</span>
+        </button>
+      </form>
+    </div>
   </div>
 </aside>
