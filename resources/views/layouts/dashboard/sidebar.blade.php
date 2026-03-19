@@ -66,14 +66,13 @@
       </ul>
     </nav>
 
-    <div class="mt-auto border-top border-secondary-subtle p-2">
-      <form method="POST" action="{{ route('logout') }}">
+    <div class="border-top border-secondary-subtle p-1">
+      <form method="POST" action="{{ route('logout') }}" class="w-100">
         @csrf
-        <button type="submit" class="nav-link border-0 bg-transparent text-white w-100 d-flex align-items-center px-3 py-2">
+        <button type="submit" class="logout-btn text-start">
           <i class="bi bi-box-arrow-right me-2"></i>
           <span>Log out</span>
         </button>
       </form>
-    </div>
   </div>
 </aside>

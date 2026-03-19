@@ -141,7 +141,28 @@
             showActiveTheme(theme, true);
           });
         });
+
       })();
+      function toast(type, message) {
+        let bgClass = 'bg-success-subtle text-success';
+        
+        if (type === 'error') {
+          bgClass = 'bg-danger-subtle text-danger';
+        }
+
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          icon: type,
+          title: message,
+          showConfirmButton: false,
+          timer: 2500,
+          timerProgressBar: true,
+          customClass: {
+            popup: bgClass
+          }
+        });
+      }
     </script>
 
     @stack('scripts')

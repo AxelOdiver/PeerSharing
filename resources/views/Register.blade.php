@@ -83,14 +83,11 @@
             </span>
             <div class="invalid-feedback" data-error-for="password"></div>
           </div>
-          <button type="submit" class="btn btn-primary w-100">
-            Login
-          </button>
           
         </form>
         <div class="social-auth-links text-center mt-3 mb-3">
-          <p>- OR -</p>
-          <button type="submit" form="form" class="btn btn-secondary w-100">Register</button>
+          <button type="submit" form="form" class="btn btn-secondary w-100">Submit</button>
+        </div>
       </div>
     </div>
   </div>

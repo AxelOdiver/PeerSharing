@@ -25,7 +25,7 @@
 @endpush
 @section('content')
 <div class="container-fluid px-3 d-flex flex-column align-items-start gap-3 mb-4">
-  <div class="d-inline-flex bg-light rounded-0 shadow-lg p-0 overflow-hidden w-100" style="max-width: 500px;">
+  <div class="d-inline-flex bg-light rounded-0 shadow-sm p-0 overflow-hidden w-100" style="max-width: 500px;">
     <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
     <label class="btn btn-outline-dark flex-fill border-0 rounded-0 py-2 fw-bold shadow-none" for="btnradio1">Send
     </label>
@@ -33,7 +33,7 @@
     <label class="btn btn-outline-dark flex-fill border-0 rounded-0 py-2 fw-bold shadow-none" for="btnradio2">Received
     </label>    
   </div>
-  <div class="d-inline-flex bg-dark rounded-1 shadow-lg p-0 overflow-hidden">
+  <div class="d-inline-flex bg-dark rounded-1 p-0 overflow-hidden">
     <button class="btn btn-sm btn-dark rounded-1 px-3 py-1 border-0 d-flex align-items-center shadow-none">
       <i class="bi bi-funnel-fill me-1 text-white"></i>
       <span class="fw-semibold text-uppercase text-white" style="font-size: 0.75rem;">Filter</span>

@@ -6,16 +6,16 @@
 @push('styles')
 <style>
   
-  .card:hover {
+  .card-hover:hover {
     transform: translateY(-5px);
-    transition: transform 0.5s ease;
+    transition: transform 0.2s ease;
   }
 
   .btn-swap {
     background-color: var(--bs-emphasis-color) !important;
     color: var(--bs-body-bg) !important;
     border: none;
-    transition: all 0.5s ease;
+    transition: all 0.3s ease;
   }
 
   .btn-swap:hover {
@@ -29,7 +29,7 @@
 <div class="row d-flex align-items-stretch">
   <div class="col-12 col-md-6 mb-4 d-flex flex-column">
     <h2 class="mb-3 fw-bold">Free Learning</h2>
-    <div class="card border-0 shadow-sm rounded-2 overflow-hidden h-100">
+    <div class="card card-hover border-0 shadow-sm rounded-2 overflow-hidden h-100">
       <div style="overflow: hidden;"> 
         <img src="https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg" class="card-img-top rounded-2" style="object-fit: cover; height: 150px;" />
       </div>
@@ -48,7 +48,7 @@
  <!-- MOST COLLABORATED -->
   <div class="col-12 col-md-6 mb-4 mt-2 mt-md-0 d-flex flex-column">
     <h2 class="mb-3 fw-bold">Swap, learn, grow</h2>
-    <div class="card border-0 shadow-sm rounded-2 p-4 card-border-dark overflow-hidden h-100 d-flex flex-column">
+    <div class="card card-hover border-0 shadow-sm rounded-2 p-4 card-border-dark overflow-hidden h-100 d-flex flex-column">
       <div class="flex-grow-1">
         <p><a href="#" class="fw-bold btn btn-link link-body-emphasis text-decoration-none pb-1 p-0">Most Collaborated</a></p>
         <p class="text-muted" style="font-size: 1.1rem;">
