@@ -8,7 +8,7 @@
   <div class="sidebar-wrapper d-flex flex-column" style="min-height: calc(100vh - 60px);">
     <div class="sidebar-user border-bottom border-secondary-subtle">
       <div class="d-flex justify-content-start align-items-center gap-2 p-3">
-        <div class="rounded-circle bg-primary d-flex align-items-center justify-content-center dashboard-avatar me-2">
+        <div class="rounded-circle bg-primary d-flex align-items-center justify-content-center dashboard-avatar me-2 flex-shrink-0">
           <i class="bi bi-person-fill text-white"></i>
         </div>
         <div class="sidebar-user-meta ">
@@ -34,7 +34,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="{{ route('favorites') }}" class="nav-link {{ request()->routeIs('favorites') ? 'active' : '' }}">
+          <a href="{{ route('favorites.index') }}" class="nav-link {{ request()->routeIs('favorites.index') ? 'active' : '' }}">
             <i class="nav-icon bi bi-star"></i>
             <p>Favorites</p>
           </a>

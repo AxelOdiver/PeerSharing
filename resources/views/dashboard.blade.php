@@ -38,7 +38,7 @@
           <div class="d-flex justify-content-between mb-2">
             <small class="text-muted">1,234 Students</small>
             <small class="text-muted">10h 26m</small>
-            <button class="text-muted btn btn-sm p-0 shadow-none fs-6"><i class="bi bi-bookmark"></i></button>
+            <button class="text-muted btn btn-sm p-0 shadow-none fs-6 fav-btn" data-id="2"><i class="bi bi-bookmark"></i></button>
           </div>
           <h5 class="mb-1 fw-bold">Learn Python: The Complete Python Programming Course</h5>
           <small class="text-muted">Axel Odiver</small>
@@ -69,126 +69,88 @@
   <!-- TOP STUDENTS -->
 <h2 class="mb-3 fw-bold">Top Students</h2>
 <div class="row">
-  <div class="col-12 col-md-6 col-xl-4 mb-4">
-    <div class="card border-0 shadow-sm rounded-4 p-3 h-100 w-100">
-      <div class="d-flex align-items-start gap-2 gap-sm-3">         
-        <div class="rounded-circle d-flex align-items-center justify-content-center fw-bold bg-primary text-white flex-shrink-0" 
-          style="width: 60px; height: 60px; font-size: 1.5rem;">AO
-        </div>       
-          <div class="flex-grow-1 min-w-0">
-            <div class="d-flex justify-content-between align-items-start mb-1">
-              <h5 class="fw-bold mb-0 text-truncate">Axel Odiver</h5>
-              <button class="text-muted btn btn-sm p-0 shadow-none line-height-1 ms-2 flex-shrink-0"><i class="bi bi-bookmark"></i></button>
-            </div>        
-              <p class="text-muted small mb-1 text-truncate">Web Developer
-                <span class="text-warning text-nowrap ms-1">
-                  @for($i = 0; $i < 4; $i++) <i class="bi bi-star-fill"></i> @endfor
-                  <i class="bi bi-star"></i>
-                </span>  
-              </p>       
-                  <div class="d-flex align-items-center flex-wrap gap-2 mt-2 mb-3">
-                    <div class="d-flex align-items-center">
-                      <button class="btn btn-sm p-0 shadow-none fs-5"><i class="bi bi-heart"></i></button>
-                      <small class="text-muted fw-semibold ms-1">5k+</small>
-                    </div>
-                    <div class="d-flex align-items-center">
-                      <button class="btn btn-sm p-0 shadow-none fs-5"><i class="bi bi-arrow-left-right"></i></button>
-                      <small class="text-muted fw-semibold ms-1">60</small>
-                    </div>
-                    <div class="d-flex align-items-center">
-                      <button class="btn btn-sm p-0 shadow-none fs-5"><i class="bi bi-chat-dots"></i></button>
-                      <small class="text-muted fw-semibold ms-1">128</small>
-                    </div>
-                  </div>
-                    <a href="{{ route('swap') }}" 
-                      class="btn btn-swap w-100 rounded-3 text-uppercase fw-bold py-2 {{ request()->routeIs('swap') ? 'active' : '' }}">
-                      Swap
-                    </a>
-              </div>
+  @foreach($students as $student)
+    <div class="col-12 col-md-6 col-xl-4 mb-4">
+      <div class="card border-0 shadow-sm rounded-4 p-3 h-100 w-100">
+        <div class="d-flex align-items-start gap-2 gap-sm-3">         
+          <div class="rounded-circle d-flex align-items-center justify-content-center fw-bold bg-primary text-white flex-shrink-0" 
+            style="width: 60px; height: 60px; font-size: 1.5rem;">
+            {{ strtoupper(substr($student->first_name, 0, 1)) }}{{ strtoupper(substr($student->last_name, 0, 1)) }}
           </div>
-      </div>
-  </div>
 
-  <div class="col-12 col-md-6 col-xl-4 mb-4">
-    <div class="card border-0 shadow-sm rounded-4 p-3 h-100 w-100">
-      <div class="d-flex align-items-start gap-2 gap-sm-3">         
-        <div class="rounded-circle d-flex align-items-center justify-content-center fw-bold bg-primary text-white flex-shrink-0" 
-          style="width: 60px; height: 60px; font-size: 1.5rem;">DB
-        </div>       
           <div class="flex-grow-1 min-w-0">
             <div class="d-flex justify-content-between align-items-start mb-1">
-              <h5 class="fw-bold mb-0 text-truncate">Dominic Belen</h5>
-              <button class="text-muted btn btn-sm p-0 shadow-none line-height-1 ms-2 flex-shrink-0"><i class="bi bi-bookmark"></i></button>
-            </div>        
-              <p class="text-muted small mb-1 text-truncate">Back-End Developer
-                <span class="text-warning text-nowrap ms-1">
-                  @for($i = 0; $i < 4; $i++) <i class="bi bi-star-fill"></i> @endfor
-                  <i class="bi bi-star"></i>
-                </span>  
-              </p>       
-                  <div class="d-flex align-items-center flex-wrap gap-2 mt-2 mb-3">
-                    <div class="d-flex align-items-center">
-                      <button class="btn btn-sm p-0 shadow-none fs-5"><i class="bi bi-heart"></i></button>
-                      <small class="text-muted fw-semibold ms-1">8k+</small>
-                    </div>
-                    <div class="d-flex align-items-center">
-                      <button class="btn btn-sm p-0 shadow-none fs-5"><i class="bi bi-arrow-left-right"></i></button>
-                      <small class="text-muted fw-semibold ms-1">65</small>
-                    </div>
-                    <div class="d-flex align-items-center">
-                      <button class="btn btn-sm p-0 shadow-none fs-5"><i class="bi bi-chat-dots"></i></button>
-                      <small class="text-muted fw-semibold ms-1">146</small>
-                    </div>
-                  </div>
-                    <a href="{{ route('swap') }}" 
-                      class="btn btn-swap w-100 rounded-3 text-uppercase fw-bold py-2 {{ request()->routeIs('swap') ? 'active' : '' }}">
-                      Swap
-                    </a>
-              </div>
-          </div>
-      </div>
-  </div>
+              <h5 class="fw-bold mb-0 text-truncate">{{ $student->first_name }} {{ $student->last_name }}</h5>         
+              <button class="text-muted btn btn-sm p-0 shadow-none line-height-1 ms-2 flex-shrink-0 fav-btn" data-id="{{ $student->id }}">
+                @if(in_array($student->id, $favoritedIds))
+                  <i class="bi bi-bookmark-fill text-warning"></i>
+                @else
+                  <i class="bi bi-bookmark"></i>
+                @endif
+              </button>
+            </div>  
 
-  <div class="col-12 col-md-6 col-xl-4 mb-4">
-    <div class="card border-0 shadow-sm rounded-4 p-3 h-100 w-100">
-      <div class="d-flex align-items-start gap-2 gap-sm-3">         
-        <div class="rounded-circle d-flex align-items-center justify-content-center fw-bold bg-primary text-white flex-shrink-0" 
-          style="width: 60px; height: 60px; font-size: 1.5rem;">JP
-        </div>       
-          <div class="flex-grow-1 min-w-0">
-            <div class="d-flex justify-content-between align-items-start mb-1">
-              <h5 class="fw-bold mb-0 text-truncate">John Paul Castro</h5>
-              <button class="text-muted btn btn-sm p-0 shadow-none line-height-1 ms-2 flex-shrink-0"><i class="bi bi-bookmark"></i></button>
-            </div>        
-              <p class="text-muted small mb-1 text-truncate">Data Analyst
-                <span class="text-warning text-nowrap ms-1">
-                  @for($i = 0; $i < 3; $i++) <i class="bi bi-star-fill"></i> @endfor
-                  <i class="bi bi-star"></i>
-                </span>  
-              </p>       
-                <div class="d-flex align-items-center flex-wrap gap-2 mt-2 mb-3">
-                  <div class="d-flex align-items-center">
-                    <button class="btn btn-sm p-0 shadow-none fs-5"><i class="bi bi-heart"></i></button>
-                    <small class="text-muted fw-semibold ms-1">3k+</small>
-                  </div>
-                  <div class="d-flex align-items-center">
-                    <button class="btn btn-sm p-0 shadow-none fs-5"><i class="bi bi-arrow-left-right"></i></button>
-                    <small class="text-muted fw-semibold ms-1">65</small>
-                  </div>
-                  <div class="d-flex align-items-center">
-                    <button class="btn btn-sm p-0 shadow-none fs-5"><i class="bi bi-chat-dots"></i></button>
-                    <small class="text-muted fw-semibold ms-1">1000</small>
-                  </div>
-                </div>
-                  <a href="{{ route('swap') }}" 
-                    class="btn btn-swap w-100 rounded-3 text-uppercase fw-bold py-2 {{ request()->routeIs('swap') ? 'active' : '' }}">
-                    Swap
-                  </a>
+            <p class="text-muted small mb-1 text-truncate">Peer Student
+              <span class="text-warning text-nowrap ms-1">
+                @for($i = 0; $i < 4; $i++) <i class="bi bi-star-fill"></i> @endfor
+                <i class="bi bi-star"></i>
+              </span>  
+            </p>
+                   
+            <div class="d-flex align-items-center flex-wrap gap-2 mt-2 mb-3">
+              <div class="d-flex align-items-center">
+                <button class="btn btn-sm p-0 shadow-none fs-5"><i class="bi bi-heart"></i></button>
+                <small class="text-muted fw-semibold ms-1">0</small>
               </div>
+              <div class="d-flex align-items-center">
+                <button class="btn btn-sm p-0 shadow-none fs-5"><i class="bi bi-arrow-left-right"></i></button>
+                <small class="text-muted fw-semibold ms-1">0</small>
+              </div>
+              <div class="d-flex align-items-center">
+                <button class="btn btn-sm p-0 shadow-none fs-5"><i class="bi bi-chat-dots"></i></button>
+                <small class="text-muted fw-semibold ms-1">0</small>
+              </div>
+            </div>
+            <a href="{{ route('swap') }}" 
+              class="btn btn-swap w-100 rounded-3 text-uppercase fw-bold py-2 {{ request()->routeIs('swap') ? 'active' : '' }}">
+              Swap
+            </a>
           </div>
+        </div>
       </div>
-  </div>
+    </div>
+  @endforeach
 </div>
 @endsection
 
+@push('scripts')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.fav-btn').on('click', function() {
+            let btn = $(this);
+            let itemId = btn.data('id');
+
+            $.ajax({
+                url: "{{ route('favorite.toggle') }}",
+                method: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    item_id: itemId
+                },
+                success: function(response) {
+                    if (response.action === 'added') {
+                        btn.html('<i class="bi bi-bookmark-fill text-warning"></i>');
+                    } else {
+                        btn.html('<i class="bi bi-bookmark"></i>');
+                    }
+                },
+                error: function(xhr) {
+                    console.log("Error:", xhr.responseText);
+                }
+            });
+        });
+    });
+</script>
+@endpush
 
