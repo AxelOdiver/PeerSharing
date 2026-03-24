@@ -34,7 +34,7 @@
             <div class="invalid-feedback" data-error-for="email"></div>
           </div>
 
-          <div class="input-group mb-3">
+          <div class="input-group mb-3 toggle-password" style="cursor: pointer;">
             <input
               type="password"
               name="password"
@@ -43,7 +43,7 @@
               required
             >
             <span class="input-group-text">
-              <i class="bi bi-lock-fill"></i>
+              <i class="bi bi-eye-slash-fill"></i>
             </span>
             <div class="invalid-feedback" data-error-for="password"></div>
           </div>
@@ -67,6 +67,21 @@
 document.addEventListener('DOMContentLoaded', function () {
   const $form = $('#form');
 
+    // Password show/hide toggle 
+  $('.toggle-password').on('click', function() {
+      const $input = $(this).closest('.input-group').find('input');
+      const $icon = $(this).find('i');
+
+      if ($input.attr('type') === 'password') {
+          $input.attr('type', 'text');
+          $icon.removeClass('bi-eye-slash-fill').addClass('bi-eye-fill');
+      } else {
+          $input.attr('type', 'password');
+          $icon.removeClass('bi-eye-fill').addClass('bi-eye-slash-fill');
+      }
+  });
+
+  // Submit form logic 
   function clearErrors() {
     $form.find('.is-invalid').removeClass('is-invalid');
     $('[data-error]').text('');

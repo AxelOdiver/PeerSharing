@@ -77,8 +77,8 @@
               placeholder="Password"
               required
             >
-            <span class="input-group-text">
-              <i class="bi bi-lock-fill"></i>
+            <span class="input-group-text toggle-password" style="cursor: pointer;">
+              <i class="bi bi-eye-slash-fill"></i>
             </span>
             <div class="invalid-feedback" data-error-for="password"></div>
           </div>
@@ -91,15 +91,20 @@
               placeholder="Confirm Password"
               required
             >
-            <span class="input-group-text">
-              <i class="bi bi-lock-fill"></i>
+            <span class="input-group-text toggle-password" style="cursor: pointer;">
+              <i class="bi bi-eye-slash-fill"></i>
             </span>
             <div class="invalid-feedback" data-error-for="password_confirmation"></div>
           </div>
           
         </form>
+
         <div class="social-auth-links text-center mt-3 mb-3">
-          <button type="submit" form="form" class="btn btn-secondary w-100">Submit</button>
+          <button type="submit" form="form" class="btn btn-primary w-100">Submit</button>
+        </div>
+        <div class="social-auth-links text-center mt-3 mb-3">
+          <p>- OR -</p>
+          <a href="{{ route('login') }}" class="btn btn-secondary w-100">Already have an account?</a>
         </div>
       </div>
     </div>
@@ -111,6 +116,21 @@
 document.addEventListener('DOMContentLoaded', function () {
   const $form = $('#form');
 
+    // Password show/hide toggle 
+  $('.toggle-password').on('click', function() {
+      const $input = $(this).closest('.input-group').find('input');
+      const $icon = $(this).find('i');
+
+      if ($input.attr('type') === 'password') {
+          $input.attr('type', 'text');
+          $icon.removeClass('bi-eye-slash-fill').addClass('bi-eye-fill');
+      } else {
+          $input.attr('type', 'password');
+          $icon.removeClass('bi-eye-fill').addClass('bi-eye-slash-fill');
+      }
+  });
+
+    // Submit form logic
   function clearErrors() {
     $form.find('.is-invalid').removeClass('is-invalid');
     $form.find('[data-error-for]').text('');
