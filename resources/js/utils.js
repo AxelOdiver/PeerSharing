@@ -65,3 +65,88 @@ export function setTheme(theme) {
     document.documentElement.setAttribute('data-bs-theme', theme);
   }
 }
+
+function getThemeIcon(theme) {
+  if (theme === 'dark') {
+    return 'bi-moon-fill';
+  }
+
+  if (theme === 'auto') {
+    return 'bi-circle-fill-half-stroke';
+  }
+
+  return 'bi-sun-fill';
+}
+
+export function showActiveTheme(theme) {
+  const themeSwitcher = document.querySelector('#bd-theme');
+
+  if (!themeSwitcher) {
+    return;
+  }
+
+  const activeTheme = theme === 'auto'
+    ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+    : theme;
+
+  const activeIcon = themeSwitcher.querySelector('.theme-icon-active i');
+
+  if (activeIcon) {
+    activeIcon.className = `bi ${getThemeIcon(theme)} my-1`;
+  }
+
+  document.querySelectorAll('[data-bs-theme-value]').forEach((toggle) => {
+    const isActive = toggle.getAttribute('data-bs-theme-value') === theme;
+    const checkIcon = toggle.querySelector('.bi-check-lg');
+
+    toggle.classList.toggle('active', isActive);
+    toggle.setAttribute('aria-pressed', String(isActive));
+
+    if (checkIcon) {
+      checkIcon.classList.toggle('d-none', !isActive);
+    }
+  });
+
+  themeSwitcher.setAttribute('aria-label', `Theme (${activeTheme})`);
+}
+
+export function initThemeSelector() {
+  const themeToggles = document.querySelectorAll('[data-bs-theme-value]');
+
+  if (!themeToggles.length) {
+    return;
+  }
+
+  const applyTheme = (theme) => {
+    localStorage.setItem('theme', theme);
+    setTheme(theme);
+    showActiveTheme(theme);
+  };
+
+  showActiveTheme(getPreferredTheme());
+
+  themeToggles.forEach((toggle) => {
+    toggle.addEventListener('click', () => {
+      applyTheme(toggle.getAttribute('data-bs-theme-value'));
+    });
+  });
+
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+    const storedTheme = localStorage.getItem('theme') || 'auto';
+
+    if (storedTheme === 'auto') {
+      setTheme('auto');
+      showActiveTheme('auto');
+    }
+  });
+}
+
+export function showModal(modalId) {
+  const modalElement = document.getElementById(modalId);
+
+  if (!modalElement || !window.bootstrap) {
+    return;
+  }
+
+  new window.bootstrap.Modal(modalElement).show();
+}

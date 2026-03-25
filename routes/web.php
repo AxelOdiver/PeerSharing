@@ -4,9 +4,8 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\SwapController;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,10 +15,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('guest')->group(function () {
-    Route::get('/login', [LoginController::class, 'show'])->name('login');
-    Route::post('/login', [LoginController::class, 'store'])->name('login.store');
-    Route::get('/register', [RegisterController::class, 'index'])->name('register');
-    Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
+Route::get('/login', [LoginController::class, 'show'])->name('login');
+Route::post('/login', [LoginController::class, 'store'])->name('login.store');
+Route::get('/register', [RegisterController::class, 'index'])->name('register');
+Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
 });
 
 /*
@@ -29,41 +28,31 @@ Route::middleware('guest')->group(function () {
 */
 
 Route::middleware('auth')->group(function () {
-    Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
+Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
 
 Route::get('/dashboard', function () {
-    $students = User::where('id', '!=', auth()->id())->take(3)->get(); 
-    
-    // Grabs an array of just the IDs you have already favorited (e.g., [2, 3])
-    $favoritedIds = auth()->user()->favorites->pluck('id')->toArray();
-    
-    // Pass both variables to the view
-    return view('dashboard', compact('students', 'favoritedIds'));
+$students = User::where('id', '!=', auth()->id())->take(3)->get(); 
+
+// Grabs an array of just the IDs you have already favorited (e.g., [2, 3])
+$favoritedIds = auth()->user()->favorites->pluck('id')->toArray();
+
+// Pass both variables to the view
+return view('dashboard', compact('students', 'favoritedIds'));
 })->name('dashboard');
 
-    Route::post('/favorite/toggle', [FavoriteController::class, 'toggleFavorite'])->name('favorite.toggle');
-    Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites.index');  
+Route::post('/favorite/toggle', [FavoriteController::class, 'toggleFavorite'])->name('favorite.toggle');
+Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites.index');  
 
-// 1. Saves the student in the background without refreshing
-Route::post('/swap/add', function (Illuminate\Http\Request $request) {
-    $queue = session()->get('swap_queue', []);
-    if (!in_array($request->id, $queue)) {
-        session()->push('swap_queue', $request->id);
-    }
-})->name('swap.add');
+Route::post('/swap/add', [SwapController::class, 'add'])->name('swap.add');
+Route::get('/swap', [SwapController::class, 'index'])->name('swap');
+Route::delete('/swap/{swap}', [SwapController::class, 'destroy'])->name('swap.destroy');
 
-// 2. Your actual Swap Page route (reads the saved list)
-Route::get('/swap', function () {
-    $selectedUsers = App\Models\User::whereIn('id', session('swap_queue', []))->get();
-    return view('swap', compact('selectedUsers'));
-})->name('swap');
+Route::view('/schedule', 'schedule')->name('schedule');
+Route::view('/messages', 'messages')->name('messages');
+Route::view('/history', 'history')->name('history');
 
-    Route::view('/schedule', 'schedule')->name('schedule');
-    Route::view('/messages', 'messages')->name('messages');
-    Route::view('/history', 'history')->name('history');
-
-    Route::view('/profile', 'profile.edit')->name('profile.edit');
-    Route::put('/profile', [UserController::class, 'update'])->name('profile.update');
+Route::view('/profile', 'profile.edit')->name('profile.edit');
+Route::put('/profile', [UserController::class, 'update'])->name('profile.update');
 
 
 });
@@ -74,7 +63,7 @@ Route::get('/swap', function () {
 */
 
 Route::get('/', function () {
-    return auth()->check()
-        ? redirect()->route('dashboard')
-        : redirect()->route('login');
+return auth()->check()
+? redirect()->route('dashboard')
+: redirect()->route('login');
 });

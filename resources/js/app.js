@@ -11,18 +11,31 @@ window.Swal = Swal;
 import 'admin-lte/dist/js/adminlte.js'
 
 // Import utilities and make them global
-import { toast, handleSessionToast, getPreferredTheme, setTheme } from './utils.js';
+import { toast, handleSessionToast, initThemeSelector, showModal } from './utils.js';
 window.toast = toast;
-
-// Import page-specific scripts
-import './pages/dashboard.js'
-import './pages/favorites.js'
-import './pages/auth.js'
-import './pages/register.js'
-import './pages/schedule.js'
-import './pages/profile.js'
+window.showModal = showModal;
 
 // Initialize on DOM ready
 $(document).ready(function() {
   handleSessionToast();
+  initThemeSelector();
+  
+  // Get the current page from data attribute
+  const pageName = document.body.dataset.page;
+  
+  // Map route names to page modules
+  const pageModules = {
+    'dashboard': () => import('./pages/dashboard.js'),
+    'favorites.index': () => import('./pages/favorites.js'),
+    'login': () => import('./pages/auth.js'),
+    'register': () => import('./pages/register.js'),
+    'swap': () => import('./pages/swap.js'),
+    'schedule': () => import('./pages/schedule.js'),
+    'profile.edit': () => import('./pages/profile.js'),
+  };
+  
+  // Dynamically import only the required page script
+  if (pageName && pageModules[pageName]) {
+    pageModules[pageName]().catch(err => console.error(`Failed to load page script for ${pageName}:`, err));
+  }
 });

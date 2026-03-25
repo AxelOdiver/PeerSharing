@@ -11,11 +11,11 @@
     border: none;
     transition: all 0.5s ease;
   }
-
+  
   .btn-swap:hover {
     opacity: 0.5;
   }
-
+  
 </style>
 @endpush
 @section('content')
@@ -54,45 +54,58 @@
   </div>
 </div>  
 <!-- Swap List -->
-<div class="container-fluid">
-    @if($selectedUsers->count() > 0)
-        
-        <h2 class="fw-bold mb-4">Start a Swap with {{ $selectedUsers->count() }} Peers</h2>
-        
-        <div class="row">
-            @foreach($selectedUsers as $user)
-            <div class="col-md-6 mb-3">
-                <div class="card border-0 shadow-sm rounded-4 p-3">
-                    <div class="d-flex align-items-center gap-3">
-                        <div class="rounded-circle d-flex align-items-center justify-content-center fw-bold bg-primary text-white" 
-                             style="width: 50px; height: 50px; font-size: 1.2rem;">
-                            {{ strtoupper(substr($user->first_name, 0, 1)) }}{{ strtoupper(substr($user->last_name, 0, 1)) }}
-                        </div> 
-                        <div>
-                            <h5 class="fw-bold mb-0">{{ $user->first_name }} {{ $user->last_name }}</h5>
-                            <p class="text-muted mb-0 small">{{ $user->email }}</p>
-                        </div>
-                    </div>
-                </div>
+<div class="container-fluid" id="swapPage">
+  @if($swaps->count() > 0)
+  
+  <h2 class="fw-bold mb-4" id="swapHeading">Start a Swap with <span id="swapCount">{{ $swaps->count() }}</span> Peers</h2>
+  
+  <div class="row" id="swapList">
+    @foreach($swaps as $swap)
+    <div class="col-md-6 mb-3 swap-card" data-swap-id="{{ $swap->id }}">
+      <div class="card border-0 shadow-sm rounded-4 p-3 h-100">
+        <div class="d-flex flex-column h-100">
+          <div class="d-flex align-items-center gap-3">
+            <div class="rounded-circle d-flex align-items-center justify-content-center fw-bold bg-primary text-white" 
+            style="width: 50px; height: 50px; font-size: 1.2rem;">
+            {{ strtoupper(substr($swap->requestedUser->first_name, 0, 1)) }}{{ strtoupper(substr($swap->requestedUser->last_name, 0, 1)) }}
+          </div> 
+          <div>
+            <h5 class="fw-bold mb-0">{{ $swap->requestedUser->first_name }} {{ $swap->requestedUser->last_name }}</h5>
+            <p class="text-muted mb-0 small">{{ $swap->requestedUser->email }}</p>
+          </div>
+        </div>
+          <div class="d-flex justify-content-end mt-3">
+            @if($swap->status === 'pending')
+            <form method="POST" action="{{ route('swap.destroy', $swap) }}" class="me-2 cancel-swap-form w-50 flex-grow-1">
+              @csrf
+              @method('DELETE')
+              <button type="submit" class="btn btn-swap w-100 rounded-3 text-uppercase fw-bold py-2 open-swap-modal">Unswap</button>
+            </form>
+            @endif
+            <div class="text-end">
+              <small class="text-muted">Status</small>
+              <span class="badge text-bg-{{ $swap->status === 'accepted' ? 'success' : ($swap->status === 'declined' ? 'danger' : 'warning') }}">
+                {{ ucfirst($swap->status) }}
+              </span>
             </div>
-            @endforeach
+          </div>
         </div>
+      </div>
+    </div>
+    @endforeach
+  </div>
+</div>
 
-        <div class="card border-0 shadow-sm rounded-4 p-4 mt-3">
-            <h5 class="fw-bold mb-3">Swap Details</h5>
-            <div class="alert alert-info">
-                Your group swap request form goes here!
-            </div>
-        </div>
-
-    @else
-        <h2 class="fw-bold mb-4">Swap Dashboard</h2>
-        <div class="alert alert-light text-center py-5 rounded-4 shadow-sm">
-            <i class="bi bi-people fs-1 text-muted mb-3 d-block"></i>
-            <h5 class="text-muted">You haven't selected any peers to swap with.</h5>
-            <p class="text-muted mb-0">Go back to the dashboard, check the boxes on the student cards, and click "Swap Selected"!</p>
-            <a href="{{ route('dashboard') }}" class="btn btn-primary mt-3">Find Peers</a>
-        </div>
-    @endif
+@else
+<div id="swapEmptyState">
+  <h2 class="fw-bold mb-4">Swap Dashboard</h2>
+  <div class="alert alert-light text-center py-5 rounded-4 shadow-sm">
+  <i class="bi bi-people fs-1 text-muted mb-3 d-block"></i>
+  <h5 class="text-muted">You haven't selected any peers to swap with.</h5>
+  <p class="text-muted mb-0">Go back to the dashboard, check the boxes on the student cards, and click "Swap Selected"!</p>
+  <a href="{{ route('dashboard') }}" class="btn btn-primary mt-3">Find Peers</a>
+  </div>
+</div>
+@endif
 </div>
 @endsection
