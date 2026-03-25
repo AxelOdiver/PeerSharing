@@ -54,123 +54,45 @@
   </div>
 </div>  
 <!-- Swap List -->
-<h2 class="mb-3 mt-2 fw-bold">Students</h2>
-<div class="row">
-  <div class="col-12 col-md-6 col-xl-4 mb-4">
-    <div class="card border-0 shadow-sm rounded-4 p-3 h-100 w-100">
-      <div class="d-flex align-items-start gap-2 gap-sm-3">         
-        <div class="rounded-circle d-flex align-items-center justify-content-center fw-bold bg-primary text-white flex-shrink-0" 
-          style="width: 60px; height: 60px; font-size: 1.5rem;">AO
-        </div>       
-          <div class="flex-grow-1 min-w-0">
-            <div class="d-flex justify-content-between align-items-start mb-1">
-              <h5 class="fw-bold mb-0 text-truncate">Axel Odiver</h5>
-              <button class="text-muted btn btn-sm p-0 shadow-none line-height-1 ms-2 flex-shrink-0"><i class="bi bi-bookmark"></i></button>
-            </div>        
-              <p class="text-muted small mb-1 text-truncate">Web Developer
-                <span class="text-warning text-nowrap ms-1">
-                  @for($i = 0; $i < 4; $i++) <i class="bi bi-star-fill"></i> @endfor
-                  <i class="bi bi-star"></i>
-                </span>  
-              </p>       
-                  <div class="d-flex align-items-center flex-wrap gap-2 mt-2 mb-3">
-                    <div class="d-flex align-items-center">
-                      <button class="btn btn-sm p-0 shadow-none fs-5"><i class="bi bi-heart"></i></button>
-                      <small class="text-muted fw-semibold ms-1">5k+</small>
+<div class="container-fluid">
+    @if($selectedUsers->count() > 0)
+        
+        <h2 class="fw-bold mb-4">Start a Swap with {{ $selectedUsers->count() }} Peers</h2>
+        
+        <div class="row">
+            @foreach($selectedUsers as $user)
+            <div class="col-md-6 mb-3">
+                <div class="card border-0 shadow-sm rounded-4 p-3">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="rounded-circle d-flex align-items-center justify-content-center fw-bold bg-primary text-white" 
+                             style="width: 50px; height: 50px; font-size: 1.2rem;">
+                            {{ strtoupper(substr($user->first_name, 0, 1)) }}{{ strtoupper(substr($user->last_name, 0, 1)) }}
+                        </div> 
+                        <div>
+                            <h5 class="fw-bold mb-0">{{ $user->first_name }} {{ $user->last_name }}</h5>
+                            <p class="text-muted mb-0 small">{{ $user->email }}</p>
+                        </div>
                     </div>
-                    <div class="d-flex align-items-center">
-                      <button class="btn btn-sm p-0 shadow-none fs-5"><i class="bi bi-arrow-left-right"></i></button>
-                      <small class="text-muted fw-semibold ms-1">60</small>
-                    </div>
-                    <div class="d-flex align-items-center">
-                      <button class="btn btn-sm p-0 shadow-none fs-5"><i class="bi bi-chat-dots"></i></button>
-                      <small class="text-muted fw-semibold ms-1">128</small>
-                    </div>
-                  </div>
-                    <div class="btn btn-swap w-100 rounded-3 text-uppercase fw-bold py-2">
-                      Unswap
-                    </div>
-              </div>
-          </div>
-      </div>
-  </div>
+                </div>
+            </div>
+            @endforeach
+        </div>
 
-  <div class="col-12 col-md-6 col-xl-4 mb-4">
-    <div class="card border-0 shadow-sm rounded-4 p-3 h-100 w-100">
-      <div class="d-flex align-items-start gap-2 gap-sm-3">         
-        <div class="rounded-circle d-flex align-items-center justify-content-center fw-bold bg-primary text-white flex-shrink-0" 
-          style="width: 60px; height: 60px; font-size: 1.5rem;">DB
-        </div>       
-          <div class="flex-grow-1 min-w-0">
-            <div class="d-flex justify-content-between align-items-start mb-1">
-              <h5 class="fw-bold mb-0 text-truncate">Dominic Belen</h5>
-              <button class="text-muted btn btn-sm p-0 shadow-none line-height-1 ms-2 flex-shrink-0"><i class="bi bi-bookmark"></i></button>
-            </div>        
-              <p class="text-muted small mb-1 text-truncate">Back-End Developer
-                <span class="text-warning text-nowrap ms-1">
-                  @for($i = 0; $i < 4; $i++) <i class="bi bi-star-fill"></i> @endfor
-                  <i class="bi bi-star"></i>
-                </span>  
-              </p>       
-                  <div class="d-flex align-items-center flex-wrap gap-2 mt-2 mb-3">
-                    <div class="d-flex align-items-center">
-                      <button class="btn btn-sm p-0 shadow-none fs-5"><i class="bi bi-heart"></i></button>
-                      <small class="text-muted fw-semibold ms-1">8k+</small>
-                    </div>
-                    <div class="d-flex align-items-center">
-                      <button class="btn btn-sm p-0 shadow-none fs-5"><i class="bi bi-arrow-left-right"></i></button>
-                      <small class="text-muted fw-semibold ms-1">65</small>
-                    </div>
-                    <div class="d-flex align-items-center">
-                      <button class="btn btn-sm p-0 shadow-none fs-5"><i class="bi bi-chat-dots"></i></button>
-                      <small class="text-muted fw-semibold ms-1">146</small>
-                    </div>
-                  </div>
-                    <div class="btn btn-swap w-100 rounded-3 text-uppercase fw-bold py-2">
-                      Unswap
-                    </div>
-              </div>
-          </div>
-      </div>
-  </div>
+        <div class="card border-0 shadow-sm rounded-4 p-4 mt-3">
+            <h5 class="fw-bold mb-3">Swap Details</h5>
+            <div class="alert alert-info">
+                Your group swap request form goes here!
+            </div>
+        </div>
 
-  <div class="col-12 col-md-6 col-xl-4 mb-4">
-    <div class="card border-0 shadow-sm rounded-4 p-3 h-100 w-100">
-      <div class="d-flex align-items-start gap-2 gap-sm-3">         
-        <div class="rounded-circle d-flex align-items-center justify-content-center fw-bold bg-primary text-white flex-shrink-0" 
-          style="width: 60px; height: 60px; font-size: 1.5rem;">JP
-        </div>       
-          <div class="flex-grow-1 min-w-0">
-            <div class="d-flex justify-content-between align-items-start mb-1">
-              <h5 class="fw-bold mb-0 text-truncate">John Paul Castro</h5>
-              <button class="text-muted btn btn-sm p-0 shadow-none line-height-1 ms-2 flex-shrink-0"><i class="bi bi-bookmark"></i></button>
-            </div>        
-              <p class="text-muted small mb-1 text-truncate">Data Analyst
-                <span class="text-warning text-nowrap ms-1">
-                  @for($i = 0; $i < 3; $i++) <i class="bi bi-star-fill"></i> @endfor
-                  <i class="bi bi-star"></i>
-                </span>  
-              </p>       
-                  <div class="d-flex align-items-center flex-wrap gap-2 mt-2 mb-3">
-                    <div class="d-flex align-items-center">
-                      <button class="btn btn-sm p-0 shadow-none fs-5"><i class="bi bi-heart"></i></button>
-                      <small class="text-muted fw-semibold ms-1">3k+</small>
-                    </div>
-                    <div class="d-flex align-items-center">
-                      <button class="btn btn-sm p-0 shadow-none fs-5"><i class="bi bi-arrow-left-right"></i></button>
-                      <small class="text-muted fw-semibold ms-1">65</small>
-                    </div>
-                    <div class="d-flex align-items-center">
-                      <button class="btn btn-sm p-0 shadow-none fs-5"><i class="bi bi-chat-dots"></i></button>
-                      <small class="text-muted fw-semibold ms-1">1000</small>
-                    </div>
-                  </div>
-                    <div class="btn btn-swap w-100 rounded-3 text-uppercase fw-bold py-2">
-                      Unswap
-                    </div>
-              </div>
-          </div>
-      </div>
-  </div>
+    @else
+        <h2 class="fw-bold mb-4">Swap Dashboard</h2>
+        <div class="alert alert-light text-center py-5 rounded-4 shadow-sm">
+            <i class="bi bi-people fs-1 text-muted mb-3 d-block"></i>
+            <h5 class="text-muted">You haven't selected any peers to swap with.</h5>
+            <p class="text-muted mb-0">Go back to the dashboard, check the boxes on the student cards, and click "Swap Selected"!</p>
+            <a href="{{ route('dashboard') }}" class="btn btn-primary mt-3">Find Peers</a>
+        </div>
+    @endif
 </div>
 @endsection

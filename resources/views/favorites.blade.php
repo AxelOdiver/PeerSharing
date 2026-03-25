@@ -62,8 +62,7 @@
                   <small class="text-muted fw-semibold ms-1">0</small>
                 </div>
               </div>
-              <a href="{{ route('swap') }}" 
-                class="btn btn-swap w-100 rounded-3 text-uppercase fw-bold py-2 {{ request()->routeIs('swap') ? 'active' : '' }}">
+              <a href="{{ route('swap', ['users' => [$student->id]]) }}" class="btn btn-swap w-100 rounded-3 text-uppercase fw-bold py-2">
                 Swap
               </a>
             </div>

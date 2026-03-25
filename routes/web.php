@@ -42,8 +42,22 @@ Route::get('/dashboard', function () {
 })->name('dashboard');
 
     Route::post('/favorite/toggle', [FavoriteController::class, 'toggleFavorite'])->name('favorite.toggle');
-    Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites.index');    
-    Route::view('/swap', 'swap')->name('swap');
+    Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites.index');  
+
+// 1. Saves the student in the background without refreshing
+Route::post('/swap/add', function (Illuminate\Http\Request $request) {
+    $queue = session()->get('swap_queue', []);
+    if (!in_array($request->id, $queue)) {
+        session()->push('swap_queue', $request->id);
+    }
+})->name('swap.add');
+
+// 2. Your actual Swap Page route (reads the saved list)
+Route::get('/swap', function () {
+    $selectedUsers = App\Models\User::whereIn('id', session('swap_queue', []))->get();
+    return view('swap', compact('selectedUsers'));
+})->name('swap');
+
     Route::view('/schedule', 'schedule')->name('schedule');
     Route::view('/messages', 'messages')->name('messages');
     Route::view('/history', 'history')->name('history');
