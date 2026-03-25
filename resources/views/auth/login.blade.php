@@ -34,7 +34,7 @@
             <div class="invalid-feedback" data-error-for="email"></div>
           </div>
 
-          <div class="input-group mb-3 toggle-password" style="cursor: pointer;">
+          <div class="input-group mb-3" style="cursor: pointer;">
             <input
               type="password"
               name="password"
@@ -42,7 +42,7 @@
               placeholder="Password"
               required
             >
-            <span class="input-group-text">
+            <span class="input-group-text toggle-password">
               <i class="bi bi-eye-slash-fill"></i>
             </span>
             <div class="invalid-feedback" data-error-for="password"></div>

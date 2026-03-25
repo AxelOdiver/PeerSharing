@@ -2,9 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
@@ -13,14 +12,6 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('users')->updateOrInsert(
-            [
-                'first_name' => fake()->firstName(),
-                'middle_name' => fake()->optional()->firstName(),
-                'last_name' => fake()->lastName(),
-                'email' => fake()->unique()->safeEmail(),
-                'password' => Hash::make('password'),
-            ]
-        );
+        User::factory(50)->create();
     }
 }
