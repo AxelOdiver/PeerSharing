@@ -17,7 +17,7 @@ class FavoriteController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'action' => count($status['attached']) > 0 ? 'added' : 'removed'
+            'action' => count($status['attached']) > 0 ? 'swapped' : 'removed'
         ]);
     }
 

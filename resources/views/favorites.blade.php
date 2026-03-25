@@ -81,33 +81,3 @@
   </div>
 </div>
 @endsection
-
-@push('scripts')
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('.fav-btn').on('click', function() {
-            let btn = $(this);
-            let itemId = btn.data('id');
-
-            $.ajax({
-                url: "{{ route('favorite.toggle') }}",
-                method: "POST",
-                data: {
-                    _token: "{{ csrf_token() }}",
-                    item_id: itemId
-                },
-                success: function(response) {
-                    // Optional: If you click the bookmark here, it removes the card from the screen immediately
-                    if (response.action === 'removed') {
-                        $('#card-' + itemId).fadeOut(300, function() { $(this).remove(); });
-                    }
-                },
-                error: function(xhr) {
-                    console.log("Error:", xhr.responseText);
-                }
-            });
-        });
-    });
-</script>
-@endpush
