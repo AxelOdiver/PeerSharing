@@ -21,6 +21,35 @@ export function toast(type, message) {
   });
 }
 
+export function confirmAction(text = 'Please confirm that you want to continue.', confirmButtonText = 'Confirm') {
+  const theme = document.documentElement.getAttribute('data-bs-theme') || 'light';
+  const isDark = theme === 'dark';
+
+  return window.Swal.fire({
+    title: 'Are you sure?',
+    text,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText,
+    cancelButtonText: 'Cancel',
+    reverseButtons: true,
+    focusCancel: true,
+    allowOutsideClick: true,
+    allowEscapeKey: true,
+    buttonsStyling: false,
+    background: isDark ? '#212529' : '#ffffff',
+    color: isDark ? '#f8f9fa' : '#212529',
+    customClass: {
+      popup: `shadow border-0 rounded-4 confirm-dialog ${isDark ? 'confirm-dialog-dark' : 'confirm-dialog-light'}`,
+      title: 'h4 mb-2',
+      htmlContainer: isDark ? 'text-light-emphasis' : 'text-muted',
+      actions: 'gap-2',
+      confirmButton: 'btn btn-danger',
+      cancelButton: 'btn btn-outline-secondary',
+    },
+  });
+}
+
 export function handleSessionToast() {
   const pendingToast = sessionStorage.getItem('toast');
 
@@ -148,5 +177,15 @@ export function showModal(modalId) {
     return;
   }
 
-  new window.bootstrap.Modal(modalElement).show();
+  window.bootstrap.Modal.getOrCreateInstance(modalElement).show();
+}
+
+export function hideModal(modalId) {
+  const modalElement = document.getElementById(modalId);
+
+  if (!modalElement || !window.bootstrap) {
+    return;
+  }
+
+  window.bootstrap.Modal.getOrCreateInstance(modalElement).hide();
 }

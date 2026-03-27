@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 
@@ -13,7 +14,26 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        return view('users');
+    }
+    
+    /**
+     * Return data for DataTables.
+     */
+    public function data(Request $request)
+    {
+        $query = User::query();
+
+        return response()->json([
+            'data' => $query->get()->map(function ($user) {
+                return [
+                    'id' => $user->id,
+                    'name' => trim($user->first_name . ' ' . $user->middle_name . ' ' . $user->last_name),
+                    'email' => $user->email,
+                    'joined' => optional($user->created_at)->format('M d, Y'),
+                ];
+            }),
+        ]);
     }
 
     /**
@@ -21,7 +41,15 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        $user = User::create($validated);
+
+        return response()->json([
+            'message' => 'Created successfully!',
+            'user' => $user,
+        ]);
+
     }
 
     /**
@@ -29,16 +57,17 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        return response()->json([
+            'user' => $user,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUserRequest $request)
+    public function update(UpdateUserRequest $request, User $user)
     {
         $validated = $request->validated();
-        $user = $request->user();
 
         if (empty($validated['password'])) {
             unset($validated['password']);
@@ -47,7 +76,7 @@ class UserController extends Controller
         $user->update($validated);
 
         return response()->json([
-            'message' => 'Profile updated successfully!',
+            'message' => 'Updated successfully!',
             'user' => $user,
         ]);
 
@@ -58,6 +87,10 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $user->delete();
+
+        return response()->json([
+            'message' => 'Deleted successfully!',
+        ]);
     }
 }

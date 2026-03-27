@@ -115,31 +115,19 @@
   </div>
   @endforeach
 </div>
-@endsection
 
-@section('modals')
-<!-- Swap Modal -->
-<div class="modal fade" id="swapModal" tabindex="-1" aria-labelledby="swapModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="swapModalLabel">Swap Request</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form id="swapRequestForm">
-          <input type="hidden" id="swapUserId" name="user_id" value="">
-          <div class="form-floating">
-            <textarea class="form-control" placeholder="Write a message" id="swapRequestMessage" name="message" style="height: 100px"></textarea>
-            <label for="swapRequestMessage">Write a message</label>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary" id="sendSwapRequestBtn" form="swapRequestForm">Send Request</button>
-      </div>
+<x-modal id="swapModal" title="Swap Request">
+  <form id="swapRequestForm">
+    <input type="hidden" id="swapUserId" name="user_id" value="">
+    <div class="form-floating">
+      <textarea class="form-control" placeholder="Write a message" id="swapRequestMessage" name="message" style="height: 100px"></textarea>
+      <label for="swapRequestMessage">Write a message</label>
     </div>
-  </div>
-</div>
+  </form>
+
+  <x-slot:footer>
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+    <button type="submit" class="btn btn-primary" id="sendSwapRequestBtn" form="swapRequestForm">Send Request</button>
+  </x-slot:footer>
+</x-modal>
 @endsection

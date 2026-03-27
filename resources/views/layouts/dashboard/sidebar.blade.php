@@ -1,3 +1,50 @@
+@php
+  $navItems = [
+      [
+          'href' => route('dashboard'),
+          'icon' => 'bi bi-speedometer',
+          'label' => 'Dashboard',
+          'active' => request()->routeIs('dashboard'),
+      ],
+      [
+          'href' => route('favorites.index'),
+          'icon' => 'bi bi-star',
+          'label' => 'Favorites',
+          'active' => request()->routeIs('favorites.index'),
+      ],
+      [
+          'href' => route('swap'),
+          'icon' => 'bi bi-arrow-left-right',
+          'label' => 'Swap',
+          'active' => request()->routeIs('swap'),
+      ],
+      [
+          'href' => route('schedule'),
+          'icon' => 'bi bi-alarm',
+          'label' => 'Schedule',
+          'active' => request()->routeIs('schedule'),
+      ],
+      [
+          'href' => route('messages'),
+          'icon' => 'bi bi-chat-dots',
+          'label' => 'Messages',
+          'active' => request()->routeIs('messages'),
+      ],
+      [
+          'href' => route('history'),
+          'icon' => 'bi bi-clock-history',
+          'label' => 'History',
+          'active' => request()->routeIs('history'),
+      ],
+      [
+          'href' => route('users'),
+          'icon' => 'bi bi-people',
+          'label' => 'Users',
+          'active' => request()->routeIs('users'),
+      ],
+  ];
+@endphp
+
 <aside id="appSidebar" class="app-sidebar bg-dark-subtle shadow" data-bs-theme="dark">
   <div class="sidebar-brand">
     <a href="{{ route('dashboard') }}" class="brand-link d-flex justify-content-center align-items-center w-100 p-0 gap-2">
@@ -27,42 +74,14 @@
         aria-label="Main navigation"
         data-accordion="false"
       >
-        <li class="nav-item">
-          <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
-            <i class="nav-icon bi bi-speedometer"></i>
-            <p>Dashboard</p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="{{ route('favorites.index') }}" class="nav-link {{ request()->routeIs('favorites.index') ? 'active' : '' }}">
-            <i class="nav-icon bi bi-star"></i>
-            <p>Favorites</p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="{{ route('swap') }}" class="nav-link {{ request()->routeIs('swap') ? 'active' : '' }}">
-            <i class="nav-icon bi bi-arrow-left-right"></i>
-            <p>Swap</p>
-          </a>
-        </li>
-         <li class="nav-item">
-          <a href="{{ route('schedule') }}" class="nav-link {{ request()->routeIs('schedule') ? 'active' : '' }}">
-            <i class="nav-icon bi bi-alarm"></i>
-            <p>Schedule</p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="{{ route('messages') }}" class="nav-link {{ request()->routeIs('messages') ? 'active' : '' }}">
-            <i class="nav-icon bi bi-chat-dots"></i>
-            <p>Messages</p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="{{ route('history') }}" class="nav-link {{ request()->routeIs('history') ? 'active' : '' }}">
-            <i class="nav-icon bi bi-clock-history"></i>
-            <p>History</p>
-          </a>
-        </li>
+        @foreach ($navItems as $item)
+          <x-dashboard.nav-item
+            :href="$item['href']"
+            :icon="$item['icon']"
+            :label="$item['label']"
+            :active="$item['active']"
+          />
+        @endforeach
       </ul>
     </nav>
 

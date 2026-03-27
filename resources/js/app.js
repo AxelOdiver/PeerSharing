@@ -11,9 +11,11 @@ window.Swal = Swal;
 import 'admin-lte/dist/js/adminlte.js'
 
 // Import utilities and make them global
-import { toast, handleSessionToast, initThemeSelector, showModal } from './utils.js';
+import { toast, confirmAction, handleSessionToast, initThemeSelector, showModal, hideModal } from './utils.js';
 window.toast = toast;
+window.confirmAction = confirmAction;
 window.showModal = showModal;
+window.hideModal = hideModal;
 
 // Initialize on DOM ready
 $(document).ready(function() {
@@ -32,6 +34,7 @@ $(document).ready(function() {
     'swap': () => import('./pages/swap.js'),
     'schedule': () => import('./pages/schedule.js'),
     'profile.edit': () => import('./pages/profile.js'),
+    'users': () => import('./pages/users.js'),
   };
   
   // Dynamically import only the required page script

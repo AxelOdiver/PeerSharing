@@ -102,7 +102,7 @@
   <div class="alert alert-light text-center py-5 rounded-4 shadow-sm">
   <i class="bi bi-people fs-1 text-muted mb-3 d-block"></i>
   <h5 class="text-muted">You haven't selected any peers to swap with.</h5>
-  <p class="text-muted mb-0">Go back to the dashboard, check the boxes on the student cards, and click "Swap Selected"!</p>
+  <p class="text-muted mb-0">Go back to the dashboard, check the boxes on the student cards, and click "Swap"!</p>
   <a href="{{ route('dashboard') }}" class="btn btn-primary mt-3">Find Peers</a>
   </div>
 </div>

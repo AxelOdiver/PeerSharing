@@ -1,5 +1,7 @@
 @import 'bootstrap-icons/font/bootstrap-icons.css';
 @import 'admin-lte/dist/css/adminlte.css';
+@import 'datatables.net-bs5/css/dataTables.bootstrap5.css';
+@import 'datatables.net-buttons-bs5/css/buttons.bootstrap5.css';
 
 .dashboard-avatar {
     width: 2.25rem;
@@ -39,4 +41,57 @@
 .logout-btn:hover small,
 .logout-btn:hover h6 {
     color: white !important;
+}
+
+div.dt-container div.dt-buttons {
+    gap: 0.5rem;
+}
+
+div.dt-container .dt-button.btn {
+    border-radius: 0.5rem;
+}
+
+.users-table-shell {
+    position: relative;
+    min-height: 12rem;
+}
+
+.users-table-shell.is-loading .users-table {
+    visibility: hidden;
+}
+
+.users-table-loading {
+    display: none;
+    align-items: center;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.users-table-shell.is-loading .users-table-loading {
+    display: flex;
+}
+
+.fade-field {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 0.25s ease, max-height 0.25s ease;
+}
+
+.fade-field.is-visible {
+  opacity: 1;
+  max-height: 120px;
+}
+
+.confirm-dialog {
+    border-radius: 1rem !important;
+}
+
+.confirm-dialog-light {
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.18) !important;
+}
+
+.confirm-dialog-dark {
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.45) !important;
 }
