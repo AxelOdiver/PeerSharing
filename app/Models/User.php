@@ -2,16 +2,15 @@
 
 namespace App\Models;
 
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable; 
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-   use HasFactory, Notifiable;
+    use HasFactory, Notifiable;
 
     protected $fillable = [
         'first_name',
@@ -19,6 +18,11 @@ class User extends Authenticatable
         'last_name',
         'email',
         'password',
+        'profile_picture',
+    ];
+
+    protected $appends = [
+        'profile_picture_url',
     ];
 
     protected $hidden = [
@@ -38,5 +42,14 @@ class User extends Authenticatable
     {
     // Make sure 'Item::class' matches whatever model you are favoring (e.g., Swap::class, Post::class)
     return $this->belongsToMany(User::class, 'favorites', 'user_id', 'item_id')->withTimestamps();
+    }
+
+    public function getProfilePictureUrlAttribute(): ?string
+    {
+        if (!$this->profile_picture) {
+            return null;
+        }
+
+        return Storage::url($this->profile_picture);
     }
 }

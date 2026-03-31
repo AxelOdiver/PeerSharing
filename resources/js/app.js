@@ -11,7 +11,9 @@ window.Swal = Swal;
 import 'admin-lte/dist/js/adminlte.js'
 
 // Import utilities and make them global
-import { toast, confirmAction, handleSessionToast, initThemeSelector, showModal, hideModal } from './utils.js';
+import { clearErrors, showFormErrors, toast, confirmAction, handleSessionToast, initThemeSelector, showModal, hideModal } from './utils.js';
+window.clearErrors = clearErrors;
+window.showFormErrors = showFormErrors;
 window.toast = toast;
 window.confirmAction = confirmAction;
 window.showModal = showModal;
@@ -33,7 +35,7 @@ $(document).ready(function() {
     'register': () => import('./pages/register.js'),
     'swap': () => import('./pages/swap.js'),
     'schedule': () => import('./pages/schedule.js'),
-    'profile.edit': () => import('./pages/profile.js'),
+    'profile': () => import('./pages/profile/edit.js'),
     'users': () => import('./pages/users.js'),
   };
   

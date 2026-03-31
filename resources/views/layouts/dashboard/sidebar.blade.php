@@ -61,13 +61,19 @@
   <div class="sidebar-wrapper d-flex flex-column" style="min-height: calc(100vh - 60px);">
     <div class="sidebar-user border-bottom border-secondary-subtle">
       <div class="d-flex justify-content-start align-items-center gap-2 p-3">
-        <div class="rounded-circle bg-primary d-flex align-items-center justify-content-center dashboard-avatar me-2 flex-shrink-0">
-          <i class="bi bi-person-fill text-white"></i>
-        </div>
+        <img
+          src="{{ auth()->user()->profile_picture_url ?? '/images/profile-placeholder.jpeg' }}"
+          alt="{{ trim(auth()->user()->first_name . ' ' . auth()->user()->last_name) ?: 'User' }}"
+          id="sidebarUserAvatar"
+          class="rounded-circle dashboard-avatar me-2 flex-shrink-0 object-fit-cover"
+          width="40"
+          height="40"
+        >
+
         <div class="sidebar-user-meta ">
-          <div class="fw-semibold text-white">{{ auth()->user()->first_name. ' ' .auth()->user()->middle_name. ' ' .auth()->user()->last_name ?? 'User' }}</div>
-          <small class="text-white-50 d-block">{{ auth()->user()->email ?? '' }}</small>
-          <a href="{{ route('profile.edit') }}" class="small link-light">Edit profile</a>
+          <div class="fw-semibold text-white" id="sidebarUserName">{{ auth()->user()->first_name. ' ' .auth()->user()->middle_name. ' ' .auth()->user()->last_name ?? 'User' }}</div>
+          <small class="text-white-50 d-block" id="sidebarUserEmail">{{ auth()->user()->email ?? '' }}</small>
+          <a href="{{ route('profile') }}" class="small link-light">Edit profile</a>
         </div>
       </div>
     </div>

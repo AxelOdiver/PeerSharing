@@ -5,6 +5,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\SwapController;
+use App\Http\Controllers\ProfileController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -55,8 +56,9 @@ Route::middleware('auth')->group(function () {
     Route::view('/history', 'history')->name('history');
     Route::view('/community', 'community')->name('community');
 
-    Route::view('/profile', 'profile.edit')->name('profile.edit');
-    Route::put('/profile', [UserController::class, 'update'])->name('profile.update');
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    Route::get('/profile/show', [ProfileController::class, 'show'])->name('profile.show');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
 
     Route::get('/users', [UserController::class, 'index'])->name('users');
     Route::post('/users', [UserController::class, 'store'])->name('users.store');

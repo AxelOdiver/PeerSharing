@@ -1,5 +1,3 @@
-import { hideModal } from '../utils';
-
 $(document).ready(async function () {
   const table = $('#usersTable');
   const $tableShell = $('#usersTableShell');

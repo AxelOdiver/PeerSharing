@@ -1,4 +1,36 @@
 // Global utility functions
+export function clearErrors($form, alertId = null) {
+    $form.find('.is-invalid').removeClass('is-invalid');
+    $form.find('[data-error-for]').text('');
+
+    if (alertId) {
+        $(`#${alertId}`).addClass('d-none').text('');
+    }
+    
+}
+
+export function showFormErrors($form, errors) {
+    if (!$form || !errors) return;
+
+    // clear previous errors
+    $form.find('.is-invalid').removeClass('is-invalid');
+    $form.find('[data-error-for]').text('');
+
+    for (const field in errors) {
+        const msg = errors[field]?.[0] ?? 'Invalid input';
+
+        const $input = $form.find(`[name="${field}"]`);
+        const $error = $form.find(`[data-error-for="${field}"]`);
+
+        if ($input.length) {
+            $input.addClass('is-invalid');
+        }
+
+        if ($error.length) {
+            $error.text(msg);
+        }
+    }
+}
 
 export function toast(type, message) {
   let bgClass = 'bg-success-subtle text-success';
