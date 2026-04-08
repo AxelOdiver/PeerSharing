@@ -34,6 +34,7 @@ class ProfileController extends Controller
         $user->middle_name = $request->input('middle_name');
         $user->last_name = $request->input('last_name');
         $user->email = $request->input('email');
+        $user->description = $request->input('description');
 
         if ($request->filled('password')) {
             $user->password = bcrypt($request->input('password'));

@@ -18,51 +18,51 @@
     flex-direction: column;
     justify-content: space-between;
   }
-
+  
   .availability-tile:hover {
     transform: translateY(-2px);
     box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .08);
   }
-
+  
   .availability-tile.active {
     border-color: var(--bs-primary);
     box-shadow: 0 0 0 .2rem rgba(var(--bs-primary-rgb), .15);
   }
-
+  
   .availability-day {
     font-size: 1rem;
     font-weight: 600;
     margin-bottom: .5rem;
   }
-
+  
   .availability-status {
     font-size: .875rem;
     opacity: .8;
     margin-bottom: .5rem;
   }
-
+  
   .availability-time {
     font-size: 1rem;
     font-weight: 700;
     color: var(--bs-primary);
     word-break: break-word;
   }
-
+  
   .availability-empty {
     color: var(--bs-secondary-color);
     font-weight: 500;
   }
-
+  
   @media (max-width: 575.98px) {
     .availability-tile {
       min-height: 120px;
       padding: .875rem;
     }
-
+    
     .availability-day {
       font-size: .95rem;
     }
-
+    
     .availability-time {
       font-size: .95rem;
     }
@@ -170,24 +170,34 @@
             <small class="text-muted">Click a day to set your schedule</small>
           </div>
         </div>
-
+        
         <div class="card-body">
           <div class="row g-3 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-7" id="weekTiles">
           </div>
         </div>
       </div>
     </div>
-    <!-- Account Status Card -->
+    <!-- Description Card -->
     <div class="card flex-fill">
+      <div class="card-header d-flex align-items-center">
+        <h3 class="card-title mb-0">Description</h3>
+        <button type="button" id="editDescriptionBtn" class="btn btn-sm btn-primary justify-content-end d-flex align-items-center ms-auto">Edit</button>
+      </div>
       <div class="card-body">
-        <h3 class="h5 mb-3">Account Status</h3>
-        <div class="d-flex justify-content-between align-items-center border rounded-3 px-3 py-2 mb-3">
-          <span class="text-body-secondary">Password</span>
-          <span class="badge text-bg-success" id="profilePasswordStatus">Unchanged</span>
+        <div id="descriptionViewMode">
+          <p id="descriptionText" class="form-text m-2 fs-5">
+            {{ auth()->user()->description ?? 'No description yet.' }}
+          </p>
         </div>
-        <div class="d-flex justify-content-between align-items-center border rounded-3 px-3 py-2">
-          <span class="text-body-secondary">Profile Photo</span>
-          <span class="badge text-bg-secondary" id="profilePhotoStatus">No photo</span>
+        <div id="descriptionEditMode" style="display: none;">
+          <textarea name="description" 
+          class="form-control form-control-lg" 
+          rows="4" 
+          maxlength="200"
+          placeholder="Enter your description">{{ old('description', auth()->user()->description) }}</textarea>
+          <div class="text-end mt-2">
+            <button type="button" id="cancelEditBtn" class="btn btn-sm btn-secondary">Cancel</button>
+          </div>
         </div>
       </div>
     </div>
@@ -202,12 +212,12 @@
 <x-modal id="availabilityModal" title="Set Availability">
   <form id="availabilityForm">
     <input type="hidden" id="selectedDayIndex">
-
+    
     <div class="mb-3">
       <label for="selectedDayLabel" class="form-label">Day</label>
       <input type="text" class="form-control" id="selectedDayLabel" readonly>
     </div>
-
+    
     <div class="row g-3">
       <div class="col-6">
         <label for="startTime" class="form-label">Start time</label>
@@ -218,16 +228,16 @@
         <input type="time" class="form-control" id="endTime" required>
       </div>
     </div>
-
+    
     <div class="form-text mt-3">
       Pick your available time range for this day.
     </div>
   </form>
-
+  
   <x-slot:footer>
-    <button type="button" class="btn btn-outline-secondary me-auto" id="clearTimeBtn">Clear</button>
-    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-    <button type="submit" class="btn btn-primary" form="availabilityForm">Save availability</button>
-  </x-slot:footer>
+  <button type="button" class="btn btn-outline-secondary me-auto" id="clearTimeBtn">Clear</button>
+  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+  <button type="submit" class="btn btn-primary" form="availabilityForm">Save availability</button>
+</x-slot:footer>
 </x-modal>
 @endsection

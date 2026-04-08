@@ -1,31 +1,34 @@
 $(document).ready(function() {
     const $form = $('#form');
     const placeholderImage = '/images/profile-placeholder.jpeg';
-
+    
     function getFullName(user) {
         return [user.first_name, user.middle_name, user.last_name]
-            .filter(Boolean)
-            .join(' ')
-            .trim();
+        .filter(Boolean)
+        .join(' ')
+        .trim();
     }
-
+    
     function renderProfile(user, options = {}) {
         const fullName = getFullName(user) || 'User';
         const imageUrl = user.profile_picture_url ?? placeholderImage;
-
+        
         $('#profileImage').attr('src', imageUrl);
         $('[name="first_name"]').val(user.first_name ?? '');
         $('[name="middle_name"]').val(user.middle_name ?? '');
         $('[name="last_name"]').val(user.last_name ?? '');
         $('[name="email"]').val(user.email ?? '');
-
+        
+        $('#descriptionText').text(user.description ? user.description : 'No description yet.');
+        $('[name="description"]').val(user.description ?? '');
+        
         $('#profileSummaryName').text(fullName);
         $('#profileSummaryEmail').text(user.email ?? '-');
         $('#profilePhotoStatus')
-            .text(user.profile_picture_url ? 'Uploaded' : 'No photo')
-            .toggleClass('text-bg-secondary', !user.profile_picture_url)
-            .toggleClass('text-bg-success', Boolean(user.profile_picture_url));
-
+        .text(user.profile_picture_url ? 'Uploaded' : 'No photo')
+        .toggleClass('text-bg-secondary', !user.profile_picture_url)
+        .toggleClass('text-bg-success', Boolean(user.profile_picture_url));
+        
         if (options.passwordChanged) {
             $('#profilePasswordStatus').text('Updated');
         }
@@ -42,25 +45,40 @@ $(document).ready(function() {
             console.error(xhr.responseText);
         }
     });
-
+    
+    $('#editDescriptionBtn').on('click', function() {
+        $('#descriptionViewMode').hide();       // Hide the text
+        $('#descriptionEditMode').show();       // Show the textarea
+        $(this).hide();                         // Hide the Edit button itself
+    });
+    
+    $('#cancelEditBtn').on('click', function() {
+        const currentText = $('#descriptionText').text().trim();
+        $('[name="description"]').val(currentText === 'No description yet.' ? '' : currentText);
+        $('#descriptionEditMode').hide();       // Hide the textarea
+        $('#descriptionViewMode').show();       // Show the text
+        $('#editDescriptionBtn').show();        // Show the Edit button itself
+    });
+    
     $('#saveChangesBtn').on('click', function(e) {
         e.preventDefault();
         $form.trigger('submit');    
     });
-
+    
     $form.on('submit', function(e) {
         e.preventDefault();
         clearErrors($form);
-
+        
         const formData = new FormData(this); // captures all form fields
         formData.append('_method', 'PUT');
-
+        formData.append('description', $('[name="description"]').val());
+        
         // Manually append the file since it's outside the form
         const file = $('#profilePictureUpload')[0].files[0];
         if (file) {
             formData.append('profile_picture', file);
         }
-
+        
         $.ajax({
             url: $form.attr('action'),
             method: 'POST',
@@ -72,6 +90,9 @@ $(document).ready(function() {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function(response) {
+                $('#descriptionEditMode').hide();
+                $('#descriptionViewMode').show();
+                $('#editDescriptionBtn').show();
                 renderProfile(response.user, {
                     passwordChanged: Boolean(formData.get('password')),
                 });
@@ -94,7 +115,7 @@ $(document).ready(function() {
             }
         });
     });
-
+    
     $('#profilePictureUpload').on('change', function(e) {
         const file = e.target.files[0];
         
@@ -108,7 +129,7 @@ $(document).ready(function() {
             reader.readAsDataURL(file);
         }
     });
-
+    
     $('[name="password"]').on('input', function () {
         const value = $(this).val();
         if (value.length > 0) {

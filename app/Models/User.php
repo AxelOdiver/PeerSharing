@@ -20,6 +20,7 @@ class User extends Authenticatable
         'email',
         'password',
         'profile_picture',
+        'description',
     ];
 
     protected $appends = [
@@ -35,7 +36,7 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
-            'password' => 'hashed', // ✅ auto-hash on set (Laravel 10/11)
+            'password' => 'hashed', 
         ];
     }
 
