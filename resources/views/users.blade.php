@@ -11,7 +11,7 @@
                 <h1 class="h3 fw-bold mb-1">Users</h1>
                 <p class="text-muted mb-0">Browse the user directory and export the table when needed.</p>
             </div>
-            <button class="btn btn-success create-user">
+            <button class="btn btn-primary create-user">
                 <i class="bi bi-plus-lg me-1"></i>
                 Create User
             </button>
