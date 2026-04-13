@@ -3,23 +3,6 @@
 @section('title', 'My Favorites')
 @section('page-title', 'My Favorites')
 
-@push('styles')
-<style>
-  
-  .btn-swap {
-    background-color: var(--bs-emphasis-color) !important;
-    color: var(--bs-body-bg) !important;
-    border: none;
-    transition: all 0.3s ease;
-  }
-  
-  .btn-swap:hover {
-    opacity: 0.5;
-  }
-  
-</style>
-@endpush
-
 @section('content')
 <h2 class="mb-3 fw-bold">My Favorites</h2>
 <div class="row" id="favoritesList">

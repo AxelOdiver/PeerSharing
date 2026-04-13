@@ -3,27 +3,6 @@
 @section('title', 'Dashboard')
 @section('page-title', 'Dashboard')
 
-@push('styles')
-<style>
-  
-  .card-hover:hover {
-    transform: translateY(-5px);
-    transition: transform 0.2s ease;
-  }
-  
-  .btn-swap {
-    background-color: var(--bs-emphasis-color) !important;
-    color: var(--bs-body-bg) !important;
-    border: none;
-    transition: all 0.3s ease;
-  }
-  
-  .btn-swap:hover {
-    opacity: 0.5;
-  }
-  
-</style>
-@endpush
 <!-- FREE LEARNING -->
 @section('content')
 <div class="row d-flex align-items-stretch">

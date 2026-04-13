@@ -35,6 +35,22 @@
     cursor: pointer;
     width: 100%;
 }
+/* Card hover effect and button styles */
+.card-hover:hover {
+    transform: translateY(-5px);
+    transition: transform 0.2s ease;
+  }
+  
+  .btn-swap {
+    background-color: var(--bs-emphasis-color) !important;
+    color: var(--bs-body-bg) !important;
+    border: none;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-swap:hover {
+    opacity: 0.5;
+  }
 
 /* Ensures all text inside (muted, small, etc.) also turns white on hover */
 .logout-btn:hover .text-muted,
