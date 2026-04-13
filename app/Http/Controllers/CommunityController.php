@@ -1,0 +1,54 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\Community;
+
+class CommunityController extends Controller
+{
+    public function index()
+    {
+        $communities = Community::with('user')->latest()->get();
+        return view('community', compact('communities'));
+    }
+
+    public function store (Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'member_limit' => 'required|integer|min:3|max:25',
+        ]);
+
+        $validated['user_id'] = auth()->id();
+        $community = Community::create($validated);
+
+        return response()->json([
+            'message' => 'Community created successfully!',
+            'community' => $community,
+        ], 201);
+    }
+    //Load the community details page
+    public function show(Community $community)
+    {
+        $community->load('user');
+        return view('community-show', compact('community'));
+    }
+
+    public function destroy(Community $community)
+    {
+        // Ensure only the creator can delete the community
+        if ($community->user_id !== auth()->id()) {
+            return response()->json([
+                'message' => 'Unauthorized to delete this community.',
+            ], 403);
+        }
+
+        $community->delete();
+
+        return response()->json([
+            'message' => 'Community deleted successfully!',
+        ]);
+    }
+}

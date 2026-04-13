@@ -58,4 +58,9 @@ class User extends Authenticatable
 
         return Storage::url($this->profile_picture);
     }
+
+    public function communities()
+    {
+        return $this->hasMany(Community::class);
+    }
 }

@@ -7,6 +7,7 @@ use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\SwapController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\CommunityController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -56,10 +57,14 @@ Route::middleware('auth')->group(function () {
     Route::post('/schedule', [ScheduleController::class, 'store'])->name('schedule.store');
     Route::delete('/schedule', [ScheduleController::class, 'destroy'])->name('schedule.destroy');
 
+    Route::get('/community', [CommunityController::class, 'index'])->name('community');
+    Route::get('/community/{community}', [CommunityController::class, 'show'])->name('community.show');
+    Route::post('/community', [CommunityController::class, 'store'])->name('community.store');
+    Route::delete('/community/{community}', [CommunityController::class, 'destroy'])->name('community.destroy');
+
     Route::view('/schedule', 'schedule')->name('schedule');
     Route::view('/messages', 'messages')->name('messages');
     Route::view('/history', 'history')->name('history');
-    Route::view('/community', 'community')->name('community');
 
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
     Route::get('/profile/show', [ProfileController::class, 'show'])->name('profile.show');
