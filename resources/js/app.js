@@ -38,6 +38,7 @@ $(document).ready(function() {
     'profile': () => Promise.all([import('./pages/profile/edit.js'), import('./pages/schedule.js')]),
     'users': () => import('./pages/users.js'),
     'community': () => import('./pages/community.js'),
+    'community.show': () => import('./pages/community-show.js'),
   };
   
   // Dynamically import only the required page script

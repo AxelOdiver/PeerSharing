@@ -51,4 +51,26 @@ class CommunityController extends Controller
             'message' => 'Community deleted successfully!',
         ]);
     }
+
+    public function update(Request $request, Community $community)
+    {
+        // Authorization Only the creator can edit
+    if (auth()->id() !== $community->user_id) {
+            return response()->json([
+                'message' => 'You are not authorized to edit this community.'
+            ], 403); 
+        }
+
+        // Validate the incoming text
+        $validatedData = $request->validate([
+            'description' => 'required|string|max:1000',
+        ]);
+
+        // Save to the database
+        $community->update($validatedData);
+
+        return response()->json([
+            'message' => 'Description updated successfully!'
+        ]);
+    }
 }

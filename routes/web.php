@@ -61,6 +61,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/community/{community}', [CommunityController::class, 'show'])->name('community.show');
     Route::post('/community', [CommunityController::class, 'store'])->name('community.store');
     Route::delete('/community/{community}', [CommunityController::class, 'destroy'])->name('community.destroy');
+    Route::put('/community/{community}', [CommunityController::class, 'update'])->name('community.update');
 
     Route::view('/schedule', 'schedule')->name('schedule');
     Route::view('/messages', 'messages')->name('messages');

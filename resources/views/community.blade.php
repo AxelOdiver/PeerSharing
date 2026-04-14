@@ -26,7 +26,7 @@
         <i class="bi bi-person-circle me-1"></i> 
         Created by: {{ $community->user->first_name }} {{ $community->user->last_name ?? 'unknown' }}
       </div>
-      <p class="text-muted mb-2">{{ $community->description }}</p>
+      <p class="text-muted mb-2">{{ str()->limit($community->description ?? 'No description available.', 100) }}</p>
       
       <div class="mt-auto pt-2">
         <span class="badge bg-secondary mb-2 p-2">Limit: {{ $community->member_limit }} members</span>
