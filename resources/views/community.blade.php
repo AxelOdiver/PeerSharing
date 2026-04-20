@@ -26,16 +26,16 @@
         <i class="bi bi-person-circle me-1"></i> 
         Created by: {{ $community->user->first_name }} {{ $community->user->last_name ?? 'unknown' }}
       </div>
-      <p class="text-muted mb-2">{{ str()->limit($community->description ?? 'No description available.', 100) }}</p>
-      
-      <div class="mb-3">
-        <span class="badge bg-secondary-subtle text-secondary-emphasis px-3 py-2 rounded-pill">
-          <i class="bi bi-book-half me-1"></i> {{ $community->subject }}
-        </span>
-      </div>
+      <p class="text-muted mb-2">{{ str()->limit($community->description ?? 'No description available.', 150) }}</p>
       
       <div class="mt-auto pt-2">
-        <span class="badge bg-secondary mb-2 p-2">Limit: {{ $community->member_limit }} members</span>
+        <div class="d-flex flex-wrap gap-2 align-items-start mb-3">
+          <span class="badge bg-secondary-subtle text-secondary-emphasis px-3 py-2 rounded-pill">
+            <i class="bi bi-book-half me-1"></i> {{ $community->subject }}
+          </span>
+        </div>
+        
+        <span class="badge bg-secondary mb-2 p-2"><i class="bi bi-people-fill me-1"></i>Limit: {{ $community->member_limit }} members</span>
         <a href="{{ route('community.show', $community->id) }}" class="btn btn-swap w-100 rounded-3 text-uppercase fw-bold py-2 d-block text-center text-decoration-none">
           Join Community
         </a>

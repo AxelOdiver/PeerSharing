@@ -3,27 +3,41 @@
 @section('title', 'Dashboard')
 @section('page-title', 'Dashboard')
 
-<!-- FREE LEARNING -->
+<!-- COMMUNITIES -->
 @section('content')
 <div class="row d-flex align-items-stretch">
   <div class="col-12 col-md-6 mb-4 d-flex flex-column">
-    <h2 class="mb-3 fw-bold">Free Learning</h2>
-    <div class="card card-hover border-0 shadow-sm rounded-2 overflow-hidden h-100">
+    <h2 class="mb-3 fw-bold">Communities</h2>
+    @php
+      // gets the newest community from the database to feature here
+      $featuredCommunity = \App\Models\Community::with('user')->latest()->first();
+    @endphp
+    @if($featuredCommunity)
+    <div class="card card-hover border-0 shadow-sm rounded-2 overflow-hidden h-100 position-relative">
       <div style="overflow: hidden;"> 
         <img src="https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg" class="card-img-top rounded-2" style="object-fit: cover; height: 150px;" />
       </div>
-      <hr class="m-0"/>
-      <div class="card-body">
+      <div class="card-body d-flex flex-column">
         <div class="d-flex justify-content-between mb-2">
-          <small class="text-muted">1,234 Students</small>
-          <small class="text-muted">10h 26m</small>
-          <button class="text-muted btn btn-sm p-0 shadow-none fs-6 fav-btn" data-id="2"><i class="bi bi-bookmark"></i></button>
+          <small class="badge bg-secondary p-2"><i class="bi bi-people-fill me-1"></i> Limit: {{ $featuredCommunity->member_limit }} members</small>
+          <small class="badge bg-secondary-subtle text-secondary-emphasis px-3 py-2 rounded-pill"><i class="bi bi-book-half me-1"></i> {{ $featuredCommunity->subject }}</small>
         </div>
-        <h5 class="mb-1 fw-bold">Learn Python: The Complete Python Programming Course</h5>
-        <small class="text-muted">Axel Odiver</small>
+        <h4 class="mb-1 mt-1 fw-bold">
+          <a href="{{ route('community.show', $featuredCommunity->id) }}" class="text-decoration-none text-body-emphasis stretched-link">
+            {{ $featuredCommunity->name }}
+          </a>
+        </h4>
+        <small class="text-muted mb-2 mt-2 d-block"><i class="bi bi-person-circle me-1"></i>Created by: {{ $featuredCommunity->user->first_name ?? 'Unknown' }}</small>
+        <p class="text-muted small mb-0 mt-auto">{{ str()->limit($featuredCommunity->description, 150) }}</p>
       </div>
     </div>
+    @else
+    <div class="card border-0 shadow-sm rounded-2 p-4 text-center h-100 d-flex justify-content-center align-items-center">
+      <p class="text-muted mb-0">No communities available yet. Be the first to create one!</p>
+    </div>
+    @endif
   </div>
+
   <!-- MOST COLLABORATED -->
   <div class="col-12 col-md-6 mb-4 mt-2 mt-md-0 d-flex flex-column">
     <h2 class="mb-3 fw-bold">Swap, learn, grow</h2>

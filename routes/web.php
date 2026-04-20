@@ -63,6 +63,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/community/{community}', [CommunityController::class, 'destroy'])->name('community.destroy');
     Route::put('/community/{community}', [CommunityController::class, 'update'])->name('community.update');
     Route::put('/community/{id}/tags', [CommunityController::class, 'updateTags'])->name('community.tags.update');
+    Route::post('/community/{id}/posts', [CommunityController::class, 'storePost'])->name('community.posts.store');
+    Route::post('/posts/{id}/comments', [CommunityController::class, 'storeComment'])->name('comments.store');
+    Route::delete('/posts/{id}', [CommunityController::class, 'destroyPost'])->name('posts.destroy');
+    Route::delete('/comments/{id}', [CommunityController::class, 'destroyComment'])->name('comments.destroy');
 
     Route::view('/schedule', 'schedule')->name('schedule');
     Route::view('/messages', 'messages')->name('messages');

@@ -90,12 +90,16 @@ $(document).ready(function () {
   });
 
   // --- DELETE METHOD ---
+  // --- DELETE METHOD ---
   $(document).on('click', '.delete-community-btn', async function(e) {
-    e.preventDefault(); // Prevents the page from jumping
+    e.preventDefault(); 
     
-    // Using .closest() guarantees we get the ID even if you click the trash icon directly
-    const communityId = $(this).closest('.delete-community-btn').data('id'); 
+    // Capture the exact button that was clicked
+    const $btn = $(this).closest('.delete-community-btn');
+    const communityId = $btn.data('id'); 
     
+    // Capture the exact Bootstrap column wrapping the card
+    const $cardToRemove = $btn.closest('.col-12'); 
     const result = await window.confirmAction(
       'Are you sure you want to delete this community?',
       'Delete Community'
@@ -110,7 +114,11 @@ $(document).ready(function () {
         },
         success: function (response) {
           window.toast('success', response.message || 'Community deleted successfully.');
-          setTimeout(() => location.reload(), 1000);
+          
+          //Smoothly fade the card out, then delete it from the HTML!
+          $cardToRemove.fadeOut(400, function() {
+             $(this).remove();
+          });
         },
         error: function (xhr) {
           const errorMessage = xhr.responseJSON?.message || 'Failed to delete community.';

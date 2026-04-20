@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Community;
+use App\Models\Post;
+use App\Models\Comment;
 
 class CommunityController extends Controller
 {
@@ -32,10 +34,36 @@ class CommunityController extends Controller
     //Load the community details page
     public function show(Community $community)
     {
-        $community->load('user');
+        // We load the creator, the posts (newest first), the post authors, and comments
+        $community->load(['user', 'posts' => function($query) {
+            $query->latest(); 
+        }, 'posts.user', 'posts.comments']);
+
         return view('community-show', compact('community'));
     }
 
+    // Handle the AJAX request to create a new post
+    public function storePost(Request $request, $id)
+    {
+        $community = Community::findOrFail($id);
+
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'body' => 'required|string',
+        ]);
+
+        $validated['user_id'] = auth()->id();
+        $validated['community_id'] = $community->id;
+
+        $post = Post::create($validated);
+
+        return response()->json([
+            'message' => 'Post created successfully!',
+            'post' => $post
+        ]);
+    }   
+
+    // Handle community deletion
     public function destroy(Community $community)
     {
         // Ensure only the creator can delete the community
@@ -47,8 +75,8 @@ class CommunityController extends Controller
 
         $community->delete();
 
-        return response()->json([
-            'message' => 'Community deleted successfully!',
+       return response()->json([
+            'message' => 'Community deleted successfully.',
         ]);
     }
 
@@ -74,6 +102,7 @@ class CommunityController extends Controller
         ]);
     }
 
+    // Update tags for a community
     public function updateTags(Request $request, $id)
     {
         $community = Community::findOrFail($id);
@@ -96,5 +125,45 @@ class CommunityController extends Controller
             'message' => 'Tags updated successfully!',
             'tags' => $community->tags
         ]);
+    }
+
+    // comments are stored here
+    public function storeComment(Request $request, $postId)
+    {
+        $request->validate(['body' => 'required|string|max:1000']);
+
+        Comment::create([
+            'post_id' => $postId,
+            'user_id' => auth()->id(),
+            'body' => $request->body
+        ]);
+
+        return back(); 
+    }
+
+    // delete a post
+    public function destroyPost($id)
+    {
+        $post = Post::findOrFail($id);
+
+        if (auth()->id() !== $post->user_id) {
+            return response()->json(['message' => 'Unauthorized action.'], 403);
+        }
+        
+        $post->delete();
+        return response()->json(['message' => 'Post deleted successfully.']);    }
+    
+
+    // delete a comment
+    public function destroyComment($id)
+    {
+        $comment = Comment::findOrFail($id);
+
+        if (auth()->id() !== $comment->user_id) {
+            return response()->json(['message' => 'Unauthorized action.'], 403);
+        }
+
+        $comment->delete();
+        return response()->json(['message' => 'Comment deleted successfully.']);
     }
 }
