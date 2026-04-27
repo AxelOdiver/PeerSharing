@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\OtpController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FavoriteController;
@@ -13,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| Authentication Routes (Guest Only)
+| Guest Routes
 |--------------------------------------------------------------------------
 */
 
@@ -26,6 +27,16 @@ Route::middleware('guest')->group(function () {
 
 /*
 |--------------------------------------------------------------------------
+| OTP Routes (session-gated, not full auth)
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/otp', [OtpController::class, 'show'])->name('otp.show');
+Route::post('/otp/verify', [OtpController::class, 'verify'])->name('otp.verify');
+Route::post('/otp/resend', [OtpController::class, 'resend'])->name('otp.resend');
+
+/*
+|--------------------------------------------------------------------------
 | Authenticated Routes
 |--------------------------------------------------------------------------
 */
@@ -34,20 +45,15 @@ Route::middleware('auth')->group(function () {
     Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
 
     Route::get('/dashboard', function () {
-    $topstudents = User::where('id', '!=', auth()->id())->take(3)->get(); 
-    $excludeIds = $topstudents->pluck('id');
-
-    $students = User::where('id', '!=', auth()->id())->whereNotIn('id', $excludeIds)->take(6)->get(); 
-
-    // Grabs an array of just the IDs you have already favorited (e.g., [2, 3])
-    $favoritedIds = auth()->user()->favorites->pluck('id')->toArray();
-
-    // Pass both variables to the view
-    return view('dashboard', compact('topstudents','students', 'favoritedIds'));
+        $topstudents = User::where('id', '!=', auth()->id())->take(3)->get();
+        $excludeIds  = $topstudents->pluck('id');
+        $students    = User::where('id', '!=', auth()->id())->whereNotIn('id', $excludeIds)->take(6)->get();
+        $favoritedIds = auth()->user()->favorites->pluck('id')->toArray();
+        return view('dashboard', compact('topstudents', 'students', 'favoritedIds'));
     })->name('dashboard');
 
     Route::post('/favorite/toggle', [FavoriteController::class, 'toggleFavorite'])->name('favorite.toggle');
-    Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites.index');  
+    Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites.index');
 
     Route::post('/swap/add', [SwapController::class, 'add'])->name('swap.add');
     Route::get('/swap', [SwapController::class, 'index'])->name('swap');
@@ -83,6 +89,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 });
+
 /*
 |--------------------------------------------------------------------------
 | Root Redirect
@@ -91,6 +98,6 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/', function () {
     return auth()->check()
-    ? redirect()->route('dashboard')
-    : redirect()->route('login');
+        ? redirect()->route('dashboard')
+        : redirect()->route('login');
 });
