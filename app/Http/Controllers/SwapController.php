@@ -4,12 +4,30 @@ namespace App\Http\Controllers;
 
 use App\Models\Swap;
 use App\Models\User;
+use App\Models\UserSubjectQualification;
 use Illuminate\Http\Request;
 
 class SwapController extends Controller
 {
+
+    
+
     public function add(Request $request)
     {
+      
+        // THE GATEKEEPER CHECK
+        $isVerified = UserSubjectQualification::where('user_id', auth()->id())
+            ->where('status', 'approved')
+            ->exists();
+
+        if (!$isVerified) {
+            // This triggers the 403 error that your SweetAlert is waiting for!
+            return response()->json([
+                'message' => 'You must have an approved subject qualification before you can swap with peers!'
+            ], 403); 
+        }
+
+        // NORMAL SWAP LOGIC
         $validated = $request->validate([
             'id' => ['nullable', 'integer', 'exists:users,id'],
             'user_id' => ['nullable', 'integer', 'exists:users,id'],

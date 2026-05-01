@@ -9,6 +9,7 @@ use App\Http\Controllers\SwapController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\CommunityController;
+use App\Http\Controllers\QualificationController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -51,6 +52,8 @@ Route::middleware('auth')->group(function () {
         $favoritedIds = auth()->user()->favorites->pluck('id')->toArray();
         return view('dashboard', compact('topstudents', 'students', 'favoritedIds'));
     })->name('dashboard');
+
+    Route::post('/apply-to-teach', [QualificationController::class, 'store'])->name('qualifications.store');
 
     Route::post('/favorite/toggle', [FavoriteController::class, 'toggleFavorite'])->name('favorite.toggle');
     Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites.index');

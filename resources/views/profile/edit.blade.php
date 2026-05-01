@@ -203,6 +203,25 @@
     </div>
   </div>
 </div>
+
+<form action="{{ route('qualifications.store') }}" method="POST" enctype="multipart/form-data">
+  @csrf
+  <div class="card flex fill mt-4 p-3">
+    <label class="form-label">Subject You Want to Teach</label>
+    <select name="subject" class="form-select mb-3" required>
+      <option value="Coding">Coding</option>
+      <option value="Foreign Language">Foreign Language</option>
+      <option value="Graphic Design">Graphic Design</option>
+    </select>
+  
+    <label class="form-label">Upload Proof (Grade or Certificate)</label>
+    <input type="file" name="proof_document" class="form-control" accept=".jpg,.png,.pdf" required>
+    <small class="text-muted">Max file size: 2MB.</small>
+  </div>
+  
+  <button type="submit" class="btn btn-primary mt-3">Submit for Approval</button>
+</form>
+
 <!-- Form Submit Button -->
 <div class="mt-3">
   <button type="submit" id="saveChangesBtn" class="btn btn-primary w-100">Save Changes</button>
