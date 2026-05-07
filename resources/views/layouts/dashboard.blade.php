@@ -42,8 +42,8 @@
     @include('layouts.dashboard.sidebar')
     
     <main class="app-main">
-      <div class="app-content">
-        <div class="container-fluid">
+      <div class="app-content px-3 py-3 px-lg-4 py-lg-4">
+        <div class="container-fluid px-0">
           @yield('content')
         </div>
       </div>
