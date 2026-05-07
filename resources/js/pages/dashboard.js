@@ -72,20 +72,6 @@ $(document).on('submit', '#swapRequestForm', function (e) {
     success: function (response) {
       const modalElement = document.getElementById('swapModal');
       const modalInstance = window.bootstrap.Modal.getInstance(modalElement);
-<<<<<<< HEAD
-      if (modalInstance) modalInstance.hide();
-
-      $form[0].reset();
-      $('#swapUserId').val('');
-
-      if (window.toast) window.toast('success', 'Swap request sent successfully');
-
-      window.location.assign(response.redirect || '/swap');
-    },
-    error: function (xhr) {
-      $submitButton.prop('disabled', false).text('Send Request');
-      if (window.toast) window.toast('error', xhr.responseJSON?.message || 'Unable to send swap request right now');
-=======
       
       if (modalInstance) {
         modalInstance.hide();
@@ -141,7 +127,6 @@ $(document).on('submit', '#swapRequestForm', function (e) {
           window.toast('error', xhr.responseJSON?.message || 'Unable to send swap request right now');
         }
       }
->>>>>>> a2a8c6dedf945c1a4d4443da5daf934ac87a9469
     }
   });
 });

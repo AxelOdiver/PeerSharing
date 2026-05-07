@@ -9,12 +9,8 @@ use App\Http\Controllers\SwapController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\CommunityController;
-<<<<<<< HEAD
-use App\Http\Controllers\DashboardController;
-=======
 use App\Http\Controllers\QualificationController;
 use App\Http\Controllers\AdminQualificationController;
->>>>>>> a2a8c6dedf945c1a4d4443da5daf934ac87a9469
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
