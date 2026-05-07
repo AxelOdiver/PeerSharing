@@ -1,20 +1,21 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\OtpController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\SwapController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\CommunityController;
+use App\Http\Controllers\DashboardController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| Guest Routes
+| Authentication Routes (Guest Only)
 |--------------------------------------------------------------------------
 */
 
@@ -27,16 +28,6 @@ Route::middleware('guest')->group(function () {
 
 /*
 |--------------------------------------------------------------------------
-| OTP Routes (session-gated, not full auth)
-|--------------------------------------------------------------------------
-*/
-
-Route::get('/otp', [OtpController::class, 'show'])->name('otp.show');
-Route::post('/otp/verify', [OtpController::class, 'verify'])->name('otp.verify');
-Route::post('/otp/resend', [OtpController::class, 'resend'])->name('otp.resend');
-
-/*
-|--------------------------------------------------------------------------
 | Authenticated Routes
 |--------------------------------------------------------------------------
 */
@@ -44,18 +35,13 @@ Route::post('/otp/resend', [OtpController::class, 'resend'])->name('otp.resend')
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
 
-    Route::get('/dashboard', function () {
-        $topstudents = User::where('id', '!=', auth()->id())->take(3)->get();
-        $excludeIds  = $topstudents->pluck('id');
-        $students    = User::where('id', '!=', auth()->id())->whereNotIn('id', $excludeIds)->take(6)->get();
-        $favoritedIds = auth()->user()->favorites->pluck('id')->toArray();
-        return view('dashboard', compact('topstudents', 'students', 'favoritedIds'));
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::post('/favorite/toggle', [FavoriteController::class, 'toggleFavorite'])->name('favorite.toggle');
     Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites.index');
 
-    Route::post('/swap/{swap}/respond', [SwapController::class, 'respond'])->name('swap.respond');
+    Route::post('/likes/toggle', [LikeController::class, 'toggle'])->name('likes.toggle');
+
     Route::post('/swap/add', [SwapController::class, 'add'])->name('swap.add');
     Route::get('/swap', [SwapController::class, 'index'])->name('swap');
     Route::delete('/swap/{swap}', [SwapController::class, 'destroy'])->name('swap.destroy');
@@ -82,6 +68,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
     Route::get('/profile/show', [ProfileController::class, 'show'])->name('profile.show');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+
+    // Public profile page for any user
+    Route::get('/users/{user}/profile', [ProfileController::class, 'showUser'])->name('users.profile');
 
     Route::get('/users', [UserController::class, 'index'])->name('users');
     Route::post('/users', [UserController::class, 'store'])->name('users.store');

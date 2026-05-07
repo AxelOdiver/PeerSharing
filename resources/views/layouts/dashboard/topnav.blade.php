@@ -1,3 +1,112 @@
+<style>
+/* ── Search wrapper ───────────────────────────────────── */
+#searchWrapper {
+    position: relative;
+    width: 300px;
+}
+
+#globalSearch {
+    border-radius: 20px;
+    padding-left: 2.4rem;
+    padding-right: 1rem;
+    font-size: 0.875rem;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+#globalSearch:focus {
+    box-shadow: 0 0 0 0.2rem rgba(var(--bs-primary-rgb), 0.15);
+}
+
+.search-icon-prefix {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--bs-secondary-color);
+    pointer-events: none;
+    z-index: 5;
+    font-size: 0.85rem;
+}
+
+/* ── Dropdown ─────────────────────────────────────────── */
+#searchDropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    background: var(--bs-body-bg);
+    border: 1px solid var(--bs-border-color);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    z-index: 1055;
+    max-height: 360px;
+    overflow-y: auto;
+    padding: 6px 0;
+}
+
+.search-section-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--bs-secondary-color);
+    padding: 6px 14px 4px;
+}
+
+.search-item {
+    padding: 8px 14px;
+    color: var(--bs-body-color);
+    transition: background 0.12s ease;
+}
+
+.search-item:hover {
+    background: var(--bs-secondary-bg);
+    color: var(--bs-body-color);
+}
+
+.search-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--bs-primary);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.search-avatar.community-avatar {
+    background: var(--bs-secondary-bg);
+    color: var(--bs-secondary-color);
+    font-size: 1rem;
+}
+
+.search-item-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--bs-body-color);
+}
+
+.search-item-sub {
+    font-size: 0.75rem;
+    color: var(--bs-secondary-color);
+    line-height: 1.2;
+    margin-top: 1px;
+}
+
+.search-empty {
+    padding: 16px 14px;
+    font-size: 0.875rem;
+    color: var(--bs-secondary-color);
+    text-align: center;
+}
+</style>
+
 <nav class="app-header navbar navbar-expand bg-body">
   <div class="container-fluid">
     <ul class="navbar-nav w-75 me-2">
@@ -6,19 +115,23 @@
           <i class="bi bi-list"></i>
         </a>
       </li>
-      
-      <li class="nav-item" style="width: 300px;">
-       <!-- Search Form -->  
-          <div class="input-group has-validation">
-            <span class="input-group-text" id="inputGroupPrepend">
-              <i class="bi bi-search"></i>
-            </span>
-            <input type="text" class="form-control" id="" placeholder="Search...">
-            <div class="invalid-feedback"></div>
-          </div>
-      </li> 
+
+      <li class="nav-item" id="searchWrapper">
+        <div class="position-relative">
+          <i class="bi bi-search search-icon-prefix"></i>
+          <input
+            type="text"
+            id="globalSearch"
+            class="form-control form-control-sm"
+            placeholder="Search students, communities…"
+            autocomplete="off"
+          >
+          <div id="searchDropdown"></div>
+        </div>
+      </li>
     </ul>
-     <!-- Notifications Dropdown Menu -->
+
+    <!-- Notifications Dropdown Menu -->
     <ul class="navbar-nav ms-auto align-items-center gap-2">
       <li class="nav-item dropdown">
         <a class="nav-link" data-bs-toggle="dropdown" href="#" aria-expanded="false">
@@ -89,7 +202,7 @@
           <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
         </div>
       </li>
-       <!-- Theme Mode -->
+      <!-- Theme Mode -->
       <li class="nav-item dropdown">
         <button
           class="btn btn-link nav-link py-2 px-0 px-lg-2 dropdown-toggle d-flex align-items-center"

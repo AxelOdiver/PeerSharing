@@ -9,16 +9,43 @@ use App\Models\User;
 
 class ProfileController extends Controller
 {
+    // Own profile edit page
     public function index()
     {
         return view('profile.edit');
     }
 
+    // Returns own profile data as JSON (used by profile edit page via AJAX)
     public function show()
     {
         return response()->json([
             'user' => Auth::user(),
         ]);
+    }
+
+    // Public profile page for viewing another user
+    public function showUser(User $user)
+    {
+        $user->load(['schedules', 'posts' => function ($q) {
+            $q->latest()->take(3);
+        }]);
+
+        $currentUser = Auth::user();
+
+        $likeCount   = $user->likedBy()->count();
+        $swapCount   = $user->swaps()->count();
+        $commentCount = $user->comments()->count();
+        $hasLiked    = $currentUser->likes()->where('liked_user_id', $user->id)->exists();
+        $hasFavorited = $currentUser->favorites()->where('item_id', $user->id)->exists();
+
+        return view('profile.show', compact(
+            'user',          // keep as $user for route model binding
+            'likeCount',
+            'swapCount',
+            'commentCount',
+            'hasLiked',
+            'hasFavorited',
+        ) + ['profileUser' => $user]);
     }
 
     public function update(UpdateUserRequest $request)
@@ -30,10 +57,10 @@ class ProfileController extends Controller
             $user->profile_picture = $path;
         }
 
-        $user->first_name = $request->input('first_name');
+        $user->first_name  = $request->input('first_name');
         $user->middle_name = $request->input('middle_name');
-        $user->last_name = $request->input('last_name');
-        $user->email = $request->input('email');
+        $user->last_name   = $request->input('last_name');
+        $user->email       = $request->input('email');
         $user->description = $request->input('description');
 
         if ($request->filled('password')) {
@@ -44,7 +71,7 @@ class ProfileController extends Controller
 
         return response()->json([
             'message' => 'Profile updated successfully',
-            'user' => $user,
+            'user'    => $user,
         ]);
     }
 }

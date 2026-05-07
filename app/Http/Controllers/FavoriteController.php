@@ -12,7 +12,6 @@ class FavoriteController extends Controller
         $user = Auth::user();
         $itemId = $request->item_id;
 
-        // Toggles the favorite status in the pivot table
         $status = $user->favorites()->toggle($itemId);
 
         return response()->json([
@@ -23,8 +22,9 @@ class FavoriteController extends Controller
 
     public function index()
     {
-        // Fetches the user's favorites to display on the page
-        $favorites = Auth::user()->favorites;
-        return view('favorites', compact('favorites'));
+        $favorites = Auth::user()->favorites()->withCount(['likedBy', 'swaps'])->get();
+        $likedIds  = Auth::user()->likes->pluck('id')->toArray();
+
+        return view('favorites', compact('favorites', 'likedIds'));
     }
 }

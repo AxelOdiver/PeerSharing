@@ -26,6 +26,7 @@ class LoginController extends Controller
             if ($request->expectsJson()) {
                 return response()->json(['message' => 'Invalid email or password.'], 401);
             }
+            return back()->withErrors(['email' => 'Invalid email or password.']);
         }
 
         $user = Auth::user();
@@ -42,9 +43,7 @@ class LoginController extends Controller
                 ->first();
 
             if ($trusted) {
-                // Device is recognised — log straight in, refresh last-used
                 $trusted->update(['last_used_at' => now()]);
-
                 Auth::login($user);
                 $request->session()->regenerate();
 
@@ -68,7 +67,6 @@ class LoginController extends Controller
 
         Mail::to($user->email)->send(new OtpMail($code, $user->first_name));
 
-        // Keep the user's ID in session so the OTP screen knows who to verify
         session(['otp_user_id' => $user->id]);
 
         if ($request->expectsJson()) {

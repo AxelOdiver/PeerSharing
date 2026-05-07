@@ -23,7 +23,10 @@ window.hideModal = hideModal;
 $(document).ready(function() {
   handleSessionToast();
   initThemeSelector();
-  
+
+  // Load the global search on every authenticated (dashboard) page
+  import('./pages/search.js').catch(err => console.error('Failed to load search:', err));
+
   // Get the current page from data attribute
   const pageName = document.body.dataset.page;
   

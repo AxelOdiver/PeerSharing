@@ -10,14 +10,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
     protected $fillable = [
         'first_name',
         'middle_name',
         'last_name',
-        'user_type',
         'email',
         'password',
         'profile_picture',
@@ -37,7 +35,7 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
-            'password' => 'hashed', 
+            'password' => 'hashed',
         ];
     }
 
@@ -63,5 +61,35 @@ class User extends Authenticatable
     public function communities()
     {
         return $this->hasMany(Community::class);
+    }
+
+    // Users who liked this user
+    public function likedBy()
+    {
+        return $this->belongsToMany(User::class, 'likes', 'liked_user_id', 'user_id')->withTimestamps();
+    }
+
+    // Users this user has liked
+    public function likes()
+    {
+        return $this->belongsToMany(User::class, 'likes', 'user_id', 'liked_user_id')->withTimestamps();
+    }
+
+    // Swaps this user has initiated
+    public function swaps()
+    {
+        return $this->hasMany(Swap::class, 'requester_id');
+    }
+
+    // Comments this user has made
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    // Posts this user has made
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
     }
 }
