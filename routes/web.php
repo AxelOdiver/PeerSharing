@@ -9,7 +9,12 @@ use App\Http\Controllers\SwapController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\CommunityController;
+<<<<<<< HEAD
 use App\Http\Controllers\DashboardController;
+=======
+use App\Http\Controllers\QualificationController;
+use App\Http\Controllers\AdminQualificationController;
+>>>>>>> a2a8c6dedf945c1a4d4443da5daf934ac87a9469
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -36,6 +41,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::post('/apply-to-teach', [QualificationController::class, 'store'])->name('qualifications.store');
 
     Route::post('/favorite/toggle', [FavoriteController::class, 'toggleFavorite'])->name('favorite.toggle');
     Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites.index');
@@ -78,6 +85,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
     Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+
+    Route::get('/admin/qualifications', [AdminQualificationController::class, 'index'])->name('admin.qualifications'); 
+    Route::post('/admin/qualifications/{id}/respond', [AdminQualificationController::class, 'respond'])->name('admin.qualifications.respond');
 });
 
 /*
