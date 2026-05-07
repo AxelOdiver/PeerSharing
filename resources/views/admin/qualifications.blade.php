@@ -1,6 +1,5 @@
 @extends('layouts.dashboard')
 @section('title', 'Admin - Manage Qualifications')
-@section('page-title', 'Manage Qualifications')
 
 @section('content')
 <div class="container-fluid">

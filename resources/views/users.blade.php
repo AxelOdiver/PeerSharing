@@ -1,7 +1,6 @@
 @extends('layouts.dashboard')
 
 @section('title', 'Users')
-@section('page-title', 'Users')
 
 @section('content')
 <div class="card border-0 shadow-sm rounded-4">

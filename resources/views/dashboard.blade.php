@@ -1,7 +1,6 @@
 @extends('layouts.dashboard')
 
 @section('title', 'Dashboard')
-@section('page-title', 'Dashboard')
 
 @section('content')
 <div class="row d-flex align-items-stretch">

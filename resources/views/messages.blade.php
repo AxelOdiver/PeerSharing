@@ -1,7 +1,6 @@
 @extends('layouts.dashboard')
 
 @section('title', 'Messages')
-@section('page-title', 'Messages')
 
 @section('content')
 <div class="card direct-chat direct-chat-primary mb-4" draggable="false" style="">

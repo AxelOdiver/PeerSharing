@@ -42,15 +42,6 @@
     @include('layouts.dashboard.sidebar')
     
     <main class="app-main">
-      <div class="app-content-header">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-sm-6">
-              <u class="mb-0">@yield('page-title', 'Dashboard')</u>
-            </div>
-          </div>
-        </div>
-      </div>
       <div class="app-content">
         <div class="container-fluid">
           @yield('content')

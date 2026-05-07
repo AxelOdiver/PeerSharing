@@ -1,6 +1,9 @@
 // Login page - password toggle and form submission
 $(document).ready(function() {
   const $form = $('#form');
+  const $submitButton = $('#loginSubmitBtn');
+  const $submitSpinner = $('#loginSubmitSpinner');
+  const $submitText = $('#loginSubmitText');
 
   // Password show/hide toggle
   $(document).on('click', '.toggle-password', function() {
@@ -20,11 +23,19 @@ $(document).ready(function() {
   function clearErrors() {
     $form.find('.is-invalid').removeClass('is-invalid');
     $form.find('[data-error-for]').text('');
+    $('#loginError').addClass('d-none').text('');
+  }
+
+  function setSubmitting(isSubmitting) {
+    $submitButton.prop('disabled', isSubmitting);
+    $submitSpinner.toggleClass('d-none', !isSubmitting);
+    $submitText.text(isSubmitting ? 'Logging in...' : 'Login');
   }
 
   $form.on('submit', function(e) {
     e.preventDefault();
     clearErrors();
+    setSubmitting(true);
 
     $.ajax({
       url: $form.attr('action'),
@@ -38,6 +49,8 @@ $(document).ready(function() {
         window.location.assign(response.redirect);
       },
       error: function(xhr) {
+        setSubmitting(false);
+
         if (xhr.status === 422) {
           const errors = xhr.responseJSON?.errors || {};
           for (const field in errors) {

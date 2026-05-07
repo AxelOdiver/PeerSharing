@@ -1,7 +1,6 @@
 @extends('layouts.dashboard')
 
 @section('title', 'Community')
-@section('page-title', 'Community')
 
 @section('content')
 <div class="container-fluid py-4">

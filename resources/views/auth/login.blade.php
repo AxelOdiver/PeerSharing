@@ -47,8 +47,9 @@
             </span>
             <div class="invalid-feedback" data-error-for="password"></div>
           </div>
-          <button type="submit" class="btn btn-primary w-100">
-            Login
+          <button type="submit" class="btn btn-primary w-100 d-inline-flex align-items-center justify-content-center gap-2" id="loginSubmitBtn">
+            <span class="spinner-border spinner-border-sm d-none" id="loginSubmitSpinner" aria-hidden="true"></span>
+            <span id="loginSubmitText">Login</span>
           </button>
           
         </form>

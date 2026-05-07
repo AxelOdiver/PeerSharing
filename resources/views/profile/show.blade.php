@@ -1,7 +1,6 @@
 @extends('layouts.dashboard')
 
 @section('title', $profileUser->first_name . ' ' . $profileUser->last_name)
-@section('page-title', 'User Profile')
 
 @section('content')
 <div class="mb-3">

@@ -1,7 +1,6 @@
 @extends('layouts.dashboard')
 
 @section('title', 'Community')
-@section('page-title', 'Community')
 
 @section('content')
 <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-3">

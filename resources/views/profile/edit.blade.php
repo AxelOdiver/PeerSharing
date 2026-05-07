@@ -1,7 +1,6 @@
 @extends('layouts.dashboard')
 
 @section('title', 'Profile')
-@section('page-title', 'Profile')
 
 @push('styles')
 <style>

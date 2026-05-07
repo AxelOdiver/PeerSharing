@@ -60,7 +60,10 @@
             </label>
           </div>
 
-          <button type="submit" class="btn btn-primary w-100 mb-2">Verify</button>
+          <button type="submit" class="btn btn-primary w-100 mb-2 d-inline-flex align-items-center justify-content-center gap-2" id="otpSubmitBtn">
+            <span class="spinner-border spinner-border-sm d-none" id="otpSubmitSpinner" aria-hidden="true"></span>
+            <span id="otpSubmitText">Verify</span>
+          </button>
         </form>
 
         <div class="text-center mt-2">
@@ -109,10 +112,21 @@
       const $form    = $('#otpForm');
       const $error   = $('#otpError');
       const $success = $('#otpSuccess');
+      const $submitButton = $('#otpSubmitBtn');
+      const $submitSpinner = $('#otpSubmitSpinner');
+      const $submitText = $('#otpSubmitText');
+
+      function setSubmitting(isSubmitting) {
+        $submitButton.prop('disabled', isSubmitting);
+        $submitSpinner.toggleClass('d-none', !isSubmitting);
+        $submitText.text(isSubmitting ? 'Verifying...' : 'Verify');
+      }
 
       $form.on('submit', function (e) {
         e.preventDefault();
         $error.addClass('d-none').text('');
+        $success.addClass('d-none').text('');
+        setSubmitting(true);
 
         $.ajax({
           url: $form.attr('action'),
@@ -126,6 +140,7 @@
             window.location.assign(response.redirect);
           },
           error: function (xhr) {
+            setSubmitting(false);
             const errors = xhr.responseJSON?.errors?.code;
             const msg = errors ? errors[0] : (xhr.responseJSON?.message ?? 'Something went wrong.');
             $error.removeClass('d-none').text(msg);

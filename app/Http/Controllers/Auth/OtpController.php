@@ -79,7 +79,17 @@ class OtpController extends Controller
                 'last_used_at'  => now(),
             ]);
 
-            $cookie = cookie('trusted_device', $token, self::TRUST_DAYS * 24 * 60, '/', null, true, true);
+            $cookie = cookie(
+                'trusted_device',
+                $token,
+                self::TRUST_DAYS * 24 * 60,
+                '/',
+                config('session.domain'),
+                config('session.secure_cookie', $request->isSecure()),
+                true,
+                false,
+                config('session.same_site', 'lax')
+            );
         }
 
         if ($request->expectsJson()) {

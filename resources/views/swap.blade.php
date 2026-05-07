@@ -1,7 +1,6 @@
 @extends('layouts.dashboard')
 
 @section('title', 'Swap')
-@section('page-title', 'Swap')
 @push('styles')
 <style>
   .btn-swap {

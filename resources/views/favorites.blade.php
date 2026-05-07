@@ -1,7 +1,6 @@
 @extends('layouts.dashboard')
 
 @section('title', 'My Favorites')
-@section('page-title', 'My Favorites')
 
 @section('content')
 <h2 class="mb-3 fw-bold">My Favorites</h2>
